@@ -1,4 +1,3 @@
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +10,7 @@ public class Funcionario extends Pessoa {
 	
 	public Funcionario(double salario, int horasTrabalhadas, String nome, int idade) {
 		super(nome, idade);
-		Date dataDeHoje = Date.from(Instant.now());
+		Date dataDeHoje = new Date();
 		trabalho = new Trabalho(dataDeHoje, horasTrabalhadas);
 		this.salario = salario;
 		this.horasTrabalhadas = trabalho.getHoras();

@@ -3,7 +3,7 @@ public abstract class Produto {
     private String nome;
     private double preco;
 
-    public abstract double calcularValor();
+    protected abstract double calcularValor();
 
     public Produto(String nome, double preco) {
         this.nome = nome;

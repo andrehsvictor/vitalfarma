@@ -22,10 +22,48 @@ Umas paradas padronizadas pra facilitar a manutenção do projeto.
 title:
 ---
 classDiagram
-    note "O diagrama ainda está sendo desenvolvido"
-    class ClasseExemplo {
-      -atributoExemplo : int
-      +métodoExemplo(): int
+    class Farmacia {
+        +nome: string
+        +endereco: string
+        +telefone: string
+        +obterNome(): string
+        +obterEndereco(): string
+        +obterTelefone(): string
     }
-      
+
+    class Medicamento {
+        +codigo: string
+        +nome: string
+        +preco: number
+        +estoque: number
+        +obterCodigo(): string
+        +obterNome(): string
+        +obterPreco(): number
+        +obterEstoque(): number
+        +adicionarEstoque(quantidade: number): void
+        +removerEstoque(quantidade: number): void
+    }
+
+    class Cliente {
+        +nome: string
+        +cpf: string
+        +dataNascimento: Date
+        +obterNome(): string
+        +obterCPF(): string
+        +obterDataNascimento(): Date
+    }
+
+    class Receita {
+        +codigo: string
+        +cliente: Cliente
+        +medicamentos: Medicamento[]
+        +adicionarMedicamento(medicamento: Medicamento): void
+        +removerMedicamento(medicamento: Medicamento): void
+    }
+
+    Farmacia -- Medicamento
+    Farmacia -- Cliente
+    Farmacia -- Receita
+    Receita "1" -- "1..*" Medicamento
+    Receita "1" -- "1" Cliente 
 ```

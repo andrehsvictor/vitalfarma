@@ -24,7 +24,7 @@ title:
 classDiagram
     note "O diagrama ainda está sendo desenvolvido"
     class ClasseExemplo {
-      -atributoExemplo: int
+      -atributoExemplo : int
       +métodoExemplo(): int
     }
       

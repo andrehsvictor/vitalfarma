@@ -1,9 +1,6 @@
-
-public abstract class Produto {
+public abstract class Produto implements ProdutoInterface {
     private String nome;
     private double preco;
-
-    protected abstract double calcularValor();
 
     public Produto(String nome, double preco) {
         this.nome = nome;

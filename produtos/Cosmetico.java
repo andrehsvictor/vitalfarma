@@ -14,6 +14,8 @@ public class Cosmetico extends Produto {
 
     public Cosmetico(String nome) {
         super(nome, 0);
+        setPreco(nome);
+
     }
 
     @Override

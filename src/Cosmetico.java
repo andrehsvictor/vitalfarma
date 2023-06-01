@@ -1,7 +1,5 @@
 public class Cosmetico extends Produto {
-
-    private String nome;
-
+    
     public enum TipoCosmetico {
         CREME_PARA_PELE("Creme para Pele", 29.90),
         HIDRATANTE("Hidratante", 19.90),
@@ -27,13 +25,13 @@ public class Cosmetico extends Produto {
 
     public Cosmetico(String nome) {
         super(nome, 0);
-        this.nome = nome;
+
         setPreco(calcularValor(nome));
     }
 
     @Override
     public double calcularValor(String nome) {
-        String nomeFormatado = this.nome.toLowerCase();
+        String nomeFormatado = nome.toLowerCase();
 
         for (TipoCosmetico tipo : TipoCosmetico.values()) {
             if (nomeFormatado.equals(tipo.getNome().toLowerCase())) {
@@ -41,7 +39,7 @@ public class Cosmetico extends Produto {
             }
         }
 
-        throw new ProdutoInvalidoException("Cosmético inválido: " + this.nome);
+        throw new ProdutoInvalidoException("Cosmético inválido: " + getNome());
 
     }
 

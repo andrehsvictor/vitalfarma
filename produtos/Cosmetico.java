@@ -9,18 +9,16 @@ public class Cosmetico extends Produto {
         NOME_E_PRECO_MAP.put("Hidratante", 19.90);
         NOME_E_PRECO_MAP.put("Protetor Solar", 39.90);
         NOME_E_PRECO_MAP.put("Óleo de Pele", 24.90);
-
     }
 
     public Cosmetico(String nome) {
         super(nome, 0);
         setPreco(nome);
-
     }
 
     @Override
-    public boolean setPreco(String nomeProdutoArg) {
-        String nomeFormatado = nomeProdutoArg.toUpperCase();
+    public boolean setPreco(String nomeCosmetico) {
+        String nomeFormatado = nomeCosmetico.toUpperCase();
 
         for (String nomeProduto : NOME_E_PRECO_MAP.keySet())
             if (nomeFormatado.equals(nomeProduto)) {

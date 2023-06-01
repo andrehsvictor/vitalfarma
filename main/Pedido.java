@@ -7,6 +7,7 @@ public class Pedido {
     private List<Produto> produtos;
     private double valorTotal;
     private LocalDateTime dataHora;
+    
     public Pedido() {
         this.produtos = new ArrayList<>();
         this.valorTotal = 0.0;
@@ -24,7 +25,7 @@ public class Pedido {
     public double calcularValorTotal() {
         valorTotal = 0.0;
         for (Produto produto : produtos) {
-            valorTotal += produto.calcularPreco(produto.getNome());
+            valorTotal += produto.getPreco();
         }
         return valorTotal;
     }

@@ -1,6 +1,7 @@
-public abstract class Produto implements ProdutoInterface {
+public abstract class Produto implements IProduto {
     private String nome;
     private double preco;
+    
 
     public Produto(String nome, double preco) {
         this.nome = nome;

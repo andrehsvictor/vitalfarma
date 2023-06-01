@@ -6,9 +6,10 @@ class SuplementoTest {
 
 	@Test
 	void testSuplemento() {
-		Suplemento s = new Suplemento("Colageno");
-		double preco = s.getPreco();
-		assertEquals(105.00, preco);
+		Suplemento s = new Suplemento("Vitamina");
+		double precoAtual = s.getPreco();
+		double precoEsperado = 70.50;
+		assertEquals(precoEsperado, precoAtual);
 	}
 
 }

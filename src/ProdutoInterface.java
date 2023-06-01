@@ -1,4 +1,4 @@
-public interface ProdutoInterface {
+public interface TipoProduto {
     double calcularValor();
     String getDescricao();
 }

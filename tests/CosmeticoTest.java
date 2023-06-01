@@ -25,7 +25,7 @@ public class CosmeticoTest {
     }
     @Test
     public void testOleoDePele() {
-        Cosmetico cosmetico = new Cosmetico("Óleo de Pele");
+        Cosmetico cosmetico = new Cosmetico("Oleo de Pele");
         double valorEsperado = 24.90;
         Assertions.assertEquals(valorEsperado, cosmetico.getPreco());
 

@@ -5,10 +5,10 @@ public class Cosmetico extends Produto {
     private static final Map<String, Double> NOME_E_PRECO_MAP = new HashMap<>();
 
     static {
-        NOME_E_PRECO_MAP.put("Creme para Pele", 29.90);
-        NOME_E_PRECO_MAP.put("Hidratante", 19.90);
-        NOME_E_PRECO_MAP.put("Protetor Solar", 39.90);
-        NOME_E_PRECO_MAP.put("Óleo de Pele", 24.90);
+        NOME_E_PRECO_MAP.put("CREME PARA PELE", 29.90);
+        NOME_E_PRECO_MAP.put("HIDRATANTE", 19.90);
+        NOME_E_PRECO_MAP.put("PROTETOR SOLAR", 39.90);
+        NOME_E_PRECO_MAP.put("OLEO DE PELE", 24.90);
     }
 
     public Cosmetico(String nome) {

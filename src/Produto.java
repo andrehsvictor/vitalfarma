@@ -1,4 +1,4 @@
-public abstract class Produto implements TipoProduto {
+public abstract class Produto implements ProdutoInterface {
     private String nome;
     private double preco;
 

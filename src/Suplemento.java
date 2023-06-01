@@ -1,29 +1,18 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Suplemento extends Produto {
-
-    public enum TipoSuplemento{
-        CREATINA("Creatina", 120),
-        PROTEINA("Proteina", 95.90),
-        VITAMINA("Vitamina", 70.50),
-        ÔMEGA3("Ômega 3", 55.40),
-        COLÁGENO("Colágeno", 105.00);
-
-        private String nome;
-        private double preco;
-
-        TipoSuplemento(String nome, double preco) {
-            this.nome = nome;
-            this.preco = preco;
-        }
-
-        public String getNome() {
-            return nome;
-        }
-
-        public double getPreco() {
-            return preco;
-        }
-    }
-    public Suplemento(String nome) {
+	private static final Map<String, Double> NOME_E_PRECO_MAP = new HashMap<>();
+	
+	static {
+		NOME_E_PRECO_MAP.put("CREATINA", 120.00);
+		NOME_E_PRECO_MAP.put("PROTEINA", 95.90);
+		NOME_E_PRECO_MAP.put("VITAMINA", 70.50);
+        NOME_E_PRECO_MAP.put("OMEGA 3", 55.40);
+        NOME_E_PRECO_MAP.put("COLAGENO", 105.00);
+	}
+	
+	public Suplemento(String nome) {
         super(nome, 0);
 
         setPreco(calcularValor(nome));
@@ -31,15 +20,11 @@ public class Suplemento extends Produto {
 
     @Override
     public double calcularValor(String nome) {
-        String nomeFormatado = nome.toLowerCase();
+        String nomeFormatado = nome.toUpperCase();
         
-        Suplemento.TipoSuplemento[] tipos = Suplemento.TipoSuplemento.values();
-        
-        for (Suplemento.TipoSuplemento tipo : tipos) {
-            if (nomeFormatado.equals(tipo.getNome().toLowerCase())) {
-                return tipo.getPreco();
-            }
-        }
+        for (String nomeProduto : NOME_E_PRECO_MAP.keySet())
+            if (nomeFormatado.equals(nomeProduto))
+                return NOME_E_PRECO_MAP.get(nomeFormatado);
 
         throw new ProdutoInvalidoException("Suplemento inválido: " + getNome());
     }

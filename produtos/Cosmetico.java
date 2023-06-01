@@ -2,12 +2,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cosmetico extends Produto {
-    /*
-     * TODO Apague essa droga desse enum
-     * 		e substitua por um HashMap >:(
-     * 	 	(Use como exemplo a classe
-     * 		Suplemento para isso).
-     */
     private static final Map<String, Double> NOME_E_PRECO_MAP = new HashMap<>();
 
     static {

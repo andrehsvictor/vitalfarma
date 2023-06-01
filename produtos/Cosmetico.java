@@ -1,15 +1,22 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Cosmetico extends Produto {
-	/*
-	 * TODO Apague essa droga desse enum
-	 * 		e substitua por um HashMap >:(
-	 * 	 	(Use como exemplo a classe
-	 * 		Suplemento para isso).
-	 */
-    public enum TipoCosmetico {
-        CREME_PARA_PELE("Creme para Pele", 29.90),
-        HIDRATANTE("Hidratante", 19.90),
-        PROTETOR_SOLAR("Protetor Solar", 39.90),
-        OLEO_DE_PELE("Óleo de Pele", 24.90);
+    /*
+     * TODO Apague essa droga desse enum
+     * 		e substitua por um HashMap >:(
+     * 	 	(Use como exemplo a classe
+     * 		Suplemento para isso).
+     */
+    private static final Map<String, Double> NOME_E_PRECO_MAP = new HashMap<>();
+
+    static {
+        NOME_E_PRECO_MAP.put("Creme para Pele", 29.90);
+        NOME_E_PRECO_MAP.put("Hidratante", 19.90);
+        NOME_E_PRECO_MAP.put("Protetor Solar", 39.90);
+        NOME_E_PRECO_MAP.put("Óleo de Pele", 24.90);
+
+    }
 
         private String nome;
         private double preco;
@@ -33,7 +40,7 @@ public class Cosmetico extends Produto {
 
         setPreco(calcularPreco(nome));
     }
-    
+
     /*
      * TODO Mude esse calcularPreco()
      * 		para setPreco(String nomeCosmetico)

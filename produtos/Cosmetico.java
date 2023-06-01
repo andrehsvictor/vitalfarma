@@ -33,11 +33,11 @@ public class Cosmetico extends Produto {
     public Cosmetico(String nome) {
         super(nome, 0);
 
-        setPreco(calcularValor(nome));
+        setPreco(calcularPreco(nome));
     }
 
     @Override
-    public double calcularValor(String nome) {
+    public double calcularPreco(String nome) {
         String nomeFormatado = nome.toLowerCase();
 
         for (TipoCosmetico tipo : TipoCosmetico.values()) {

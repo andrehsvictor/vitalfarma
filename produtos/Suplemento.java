@@ -14,12 +14,11 @@ public class Suplemento extends Produto {
 	
 	public Suplemento(String nome) {
         super(nome, 0);
-
-        setPreco(calcularValor(nome));
+        setPreco(calcularPreco(nome));
     }
 
     @Override
-    public double calcularValor(String nome) {
+    public double calcularPreco(String nome) {
         String nomeFormatado = nome.toUpperCase();
         
         for (String nomeProduto : NOME_E_PRECO_MAP.keySet())

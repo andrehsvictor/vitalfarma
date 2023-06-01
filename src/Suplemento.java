@@ -32,8 +32,10 @@ public class Suplemento extends Produto {
     @Override
     public double calcularValor(String nome) {
         String nomeFormatado = nome.toLowerCase();
-
-        for (Suplemento.TipoSuplemento tipo : Suplemento.TipoSuplemento.values()) {
+        
+        Suplemento.TipoSuplemento[] tipos = Suplemento.TipoSuplemento.values();
+        
+        for (Suplemento.TipoSuplemento tipo : tipos) {
             if (nomeFormatado.equals(tipo.getNome().toLowerCase())) {
                 return tipo.getPreco();
             }

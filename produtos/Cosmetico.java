@@ -12,50 +12,27 @@ public class Cosmetico extends Produto {
 
     }
 
-        private String nome;
-        private double preco;
-
-        TipoCosmetico(String nome, double preco) {
-            this.nome = nome;
-            this.preco = preco;
-        }
-
-        public String getNome() {
-            return nome;
-        }
-
-        public double getPreco() {
-            return preco;
-        }
-    }
-
     public Cosmetico(String nome) {
         super(nome, 0);
-
-        setPreco(calcularPreco(nome));
     }
 
-    /*
-     * TODO Mude esse calcularPreco()
-     * 		para setPreco(String nomeCosmetico)
-     */
     @Override
-    public double calcularPreco(String nome) {
-        String nomeFormatado = nome.toLowerCase();
+    public boolean setPreco(String nomeProdutoArg) {
+        String nomeFormatado = nomeProdutoArg.toUpperCase();
 
-        for (TipoCosmetico tipo : TipoCosmetico.values()) {
-            if (nomeFormatado.equals(tipo.getNome().toLowerCase())) {
-                return tipo.getPreco();
+        for (String nomeProduto : NOME_E_PRECO_MAP.keySet())
+            if (nomeFormatado.equals(nomeProduto)) {
+                double preco = NOME_E_PRECO_MAP.get(nomeFormatado);
+                this.setPreco(preco);
+                return true;
             }
-        }
 
         throw new ProdutoInvalidoException("Cosmético inválido: " + getNome());
-
     }
 
     @Override
     public String getDescricao() {
-        return "Nome do Cosmético: "+ getNome() + "\nValor: " +getPreco();
+        return "Nome do Cosmético: " + getNome() + "\nValor: " + getPreco();
     }
-
 }
+

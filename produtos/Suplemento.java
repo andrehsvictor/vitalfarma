@@ -14,16 +14,19 @@ public class Suplemento extends Produto {
 	
 	public Suplemento(String nome) {
         super(nome, 0);
-        setPreco(calcularPreco(nome));
+        setPreco(nome);
     }
 
     @Override
-    public double calcularPreco(String nome) {
-        String nomeFormatado = nome.toUpperCase();
+    public boolean setPreco(String nomeSuplemento) {
+        String nomeFormatado = nomeSuplemento.toUpperCase();
         
         for (String nomeProduto : NOME_E_PRECO_MAP.keySet())
-            if (nomeFormatado.equals(nomeProduto))
-                return NOME_E_PRECO_MAP.get(nomeFormatado);
+            if (nomeFormatado.equals(nomeProduto)) {
+            	double preco = NOME_E_PRECO_MAP.get(nomeFormatado);
+            	this.setPreco(preco);
+                return true;
+            }
 
         throw new ProdutoInvalidoException("Suplemento inválido: " + getNome());
     }

@@ -1,3 +1,10 @@
+/*
+ * TODO Apague essa droga desse enum
+ * 		e substitua por um HashMap >:(
+ * 	 	(Use como exemplo a classe
+ * 		Suplemento para isso).
+ */
+
 public class Cosmetico extends Produto {
     
     public enum TipoCosmetico {

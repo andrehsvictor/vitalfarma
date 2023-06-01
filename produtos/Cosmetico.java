@@ -1,12 +1,10 @@
-/*
- * TODO Apague essa droga desse enum
- * 		e substitua por um HashMap >:(
- * 	 	(Use como exemplo a classe
- * 		Suplemento para isso).
- */
-
 public class Cosmetico extends Produto {
-    
+	/*
+	 * TODO Apague essa droga desse enum
+	 * 		e substitua por um HashMap >:(
+	 * 	 	(Use como exemplo a classe
+	 * 		Suplemento para isso).
+	 */
     public enum TipoCosmetico {
         CREME_PARA_PELE("Creme para Pele", 29.90),
         HIDRATANTE("Hidratante", 19.90),
@@ -35,7 +33,11 @@ public class Cosmetico extends Produto {
 
         setPreco(calcularPreco(nome));
     }
-
+    
+    /*
+     * TODO Mude esse calcularPreco()
+     * 		para setPreco(String nomeCosmetico)
+     */
     @Override
     public double calcularPreco(String nome) {
         String nomeFormatado = nome.toLowerCase();

@@ -14,10 +14,10 @@ public class Cliente {
 		this.nome = nome;
 		this.idade = idade;
 		this.email = email;
-		this.qtdCompras = 0;
-		this.clienteRecorrente = false;
-		this.idoso = (idade >= 60) ? true : false;
-		this.comprasNoMes = null;
+		qtdCompras = 0;
+		clienteRecorrente = false;
+		idoso = (idade >= 60) ? true : false;
+		comprasNoMes = null;
 	}
 	
 	public String getNome() {
@@ -77,20 +77,26 @@ public class Cliente {
     }
 	
 	public void realizarCompra(Pedido pedido) {
-		LocalDate data = LocalDate.now();
-		Month mes = data.getMonth(),
+		LocalDate dataAtual = LocalDate.now();
+		Month mesAtual = dataAtual.getMonth(),
 				comprasNoMesMonth = comprasNoMes.getMonth();
 		
 		boolean isComprasNoMesNull = (comprasNoMes == null),
-				areComprasNoMesMonthAndMesDifferent = (comprasNoMesMonth != mes);
+				areComprasNoMesMonthAndMesAtualDifferent = (comprasNoMesMonth != mesAtual);
 		
-		if (isComprasNoMesNull || areComprasNoMesMonthAndMesDifferent) {
-			qtdCompras++;
-        	comprasNoMes = data;
-        } else qtdCompras++;
+		if (isComprasNoMesNull || areComprasNoMesMonthAndMesAtualDifferent) {
+			incrementarQtdCompras();
+        	comprasNoMes = dataAtual;
+		} else {
+			incrementarQtdCompras();
+		}
 		
 		if(qtdCompras >= 5)
-			clienteRecorrente = true;;
+			clienteRecorrente = true;
+	}
+
+	private void incrementarQtdCompras() {
+		qtdCompras++;
 	}
 	
 	public double calcularDesconto(double valorTotal) {

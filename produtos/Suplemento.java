@@ -2,14 +2,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Suplemento extends Produto {
-	private static final Map<String, Double> NOME_E_PRECO_MAP = new HashMap<>();
+	private static final Map<String, Double> MAP_DE_PRECOS = new HashMap<>();
 	
 	static {
-		NOME_E_PRECO_MAP.put("CREATINA", 120.00);
-		NOME_E_PRECO_MAP.put("PROTEINA", 95.90);
-		NOME_E_PRECO_MAP.put("VITAMINA", 70.50);
-        NOME_E_PRECO_MAP.put("OMEGA 3", 55.40);
-        NOME_E_PRECO_MAP.put("COLAGENO", 105.00);
+		MAP_DE_PRECOS.put("CREATINA", 120.00);
+		MAP_DE_PRECOS.put("PROTEINA", 95.90);
+		MAP_DE_PRECOS.put("VITAMINA", 70.50);
+        MAP_DE_PRECOS.put("OMEGA 3", 55.40);
+        MAP_DE_PRECOS.put("COLAGENO", 105.00);
 	}
 	
 	public Suplemento(String nome) {
@@ -21,9 +21,9 @@ public class Suplemento extends Produto {
     public boolean setPreco(String nomeSuplemento) {
         String nomeFormatado = nomeSuplemento.toUpperCase();
         
-        for (String nomeProduto : NOME_E_PRECO_MAP.keySet())
+        for (String nomeProduto : MAP_DE_PRECOS.keySet())
             if (nomeFormatado.equals(nomeProduto)) {
-            	double preco = NOME_E_PRECO_MAP.get(nomeFormatado);
+            	double preco = MAP_DE_PRECOS.get(nomeFormatado);
             	this.setPreco(preco);
                 return true;
             }
@@ -33,6 +33,6 @@ public class Suplemento extends Produto {
 
     @Override
     public String getDescricao() {
-        return "Nome do Suplemento: "+ getNome() + "\nValor: " +getPreco();
+        return "Nome do Suplemento: "+ getNome() + "\nPreço: " +getPreco();
     }
 }

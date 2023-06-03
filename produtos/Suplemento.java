@@ -35,4 +35,5 @@ public class Suplemento extends Produto {
     public String getDescricao() {
         return "Nome do Suplemento: "+ getNome() + "\nPreço: " +getPreco();
     }
+
 }

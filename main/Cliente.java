@@ -4,22 +4,20 @@ import java.time.Month;
 public class Cliente {
 	private String nome;
 	private int idade;
-	private String email;
 	private int qtdCompras;
 	private boolean clienteRecorrente;
 	private boolean idoso;
 	private LocalDate comprasNoMes;
 	
-	public Cliente(String nome, int idade, String email) {
+	public Cliente(String nome, int idade) {
 		this.nome = nome;
 		this.idade = idade;
-		this.email = email;
 		qtdCompras = 0;
 		clienteRecorrente = false;
 		idoso = (idade >= 60) ? true : false;
 		comprasNoMes = null;
 	}
-	
+
 	public String getNome() {
         return nome;
     }
@@ -34,14 +32,6 @@ public class Cliente {
 	
 	public void setIdade(int idade) {
         this.idade = idade;
-    }
-	
-	public String getEmail() {
-        return email;
-    }
-	
-	public void setEmail(String email) {
-        this.email = email;
     }
 	
 	public int getQtdCompras() {

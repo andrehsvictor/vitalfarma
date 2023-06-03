@@ -1,34 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioDeProdutos {
+public class Estoque {
 	private List<Remedio> remedios = new ArrayList<>();
 	private List<Suplemento> suplementos = new ArrayList<>();
 	private List<Cosmetico> cosmeticos = new ArrayList<>();
-	
-	public List<Remedio> getRemedios() {
-        return remedios;
-    }
-	
-	public void setRemedios(List<Remedio> remedios) {
-        this.remedios = remedios;
-    }
-	
-	public List<Suplemento> getSuplementos() {
-        return suplementos;
-    }
-	
-	public void setSuplementos(List<Suplemento> suplementos) {
-        this.suplementos = suplementos;
-    }
-	
-	public List<Cosmetico> getCosmeticos() {
-        return cosmeticos;
-    }
-	
-	public void setCosmeticos(List<Cosmetico> cosmeticos) {
-        this.cosmeticos = cosmeticos;
-    }
 	
 	public void adicionarRemedio(Remedio remedio) {
         this.remedios.add(remedio);

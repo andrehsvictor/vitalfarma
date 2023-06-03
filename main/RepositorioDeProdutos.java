@@ -55,6 +55,9 @@ public class RepositorioDeProdutos {
     }
 
 	public void listarProdutos() {
-
+		for (Cosmetico cosmetico : cosmeticos)
+			System.out.println(cosmetico.getDescricao());
+        for (Suplemento suplemento : suplementos)
+        	System.out.println(suplemento.getDescricao());
 	}
 }

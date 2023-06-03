@@ -5,6 +5,19 @@ public class VitalFarma {
 	private List<Cliente> clientes = new ArrayList<>();
 	private List<Pedido> pedidos = new ArrayList<>();
 	private RepositorioDeProdutos estoque = new RepositorioDeProdutos();
+	
+	{
+		estoque.adicionarSuplemento(new Suplemento("Creatina"));
+		estoque.adicionarSuplemento(new Suplemento("Proteina"));
+		estoque.adicionarSuplemento(new Suplemento("Vitamina"));
+		estoque.adicionarSuplemento(new Suplemento("Omega 3"));
+		estoque.adicionarSuplemento(new Suplemento("Colageno"));
+		
+		estoque.adicionarCosmetico(new Cosmetico("Creme para pele"));
+		estoque.adicionarCosmetico(new Cosmetico("Hidratante"));
+		estoque.adicionarCosmetico(new Cosmetico("Protetor solar"));
+		estoque.adicionarCosmetico(new Cosmetico("Oleo de pele"));
+	}
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -54,7 +67,6 @@ public class VitalFarma {
 	public void fazerPedido(Cliente cliente) {
 		Pedido pedido = criarPedido(cliente);
 		estoque.listarProdutos();
-		
     }
 	
 }

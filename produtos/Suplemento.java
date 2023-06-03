@@ -12,9 +12,4 @@ public class Suplemento extends Produto {
         super(nome);
     }
 
-    @Override
-    public String getDescricao() {
-        return "Nome do Suplemento: "+ getNome() + "\nPreço: " +getPreco();
-    }
-
 }

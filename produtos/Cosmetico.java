@@ -11,10 +11,5 @@ public class Cosmetico extends Produto {
         super(nome);
         calcularPreco(nome);
     }
-
-    @Override
-    public String getDescricao() {
-        return "Nome do Cosmético: " + getNome() + "\nPreço: " + getPreco();
-    }
 }
 

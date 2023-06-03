@@ -7,16 +7,16 @@ public class VitalFarma {
 	private Estoque estoque = new Estoque();
 	
 	{
-		estoque.adicionarSuplemento(new Suplemento("Creatina"));
-		estoque.adicionarSuplemento(new Suplemento("Proteina"));
-		estoque.adicionarSuplemento(new Suplemento("Vitamina"));
-		estoque.adicionarSuplemento(new Suplemento("Omega 3"));
-		estoque.adicionarSuplemento(new Suplemento("Colageno"));
+		estoque.adicionarSuplemento("CREATINA");
+		estoque.adicionarSuplemento("PROTEINA");
+		estoque.adicionarSuplemento("VITAMINA");
+		estoque.adicionarSuplemento("OMEGA 3");
+		estoque.adicionarSuplemento("COLAGENO");
 		
-		estoque.adicionarCosmetico(new Cosmetico("Creme para pele"));
-		estoque.adicionarCosmetico(new Cosmetico("Hidratante"));
-		estoque.adicionarCosmetico(new Cosmetico("Protetor solar"));
-		estoque.adicionarCosmetico(new Cosmetico("Oleo de pele"));
+		estoque.adicionarCosmetico("CREME PARA PELE");
+		estoque.adicionarCosmetico("HIDRATANTE");
+		estoque.adicionarCosmetico("PROTETOR SOLAR");
+		estoque.adicionarCosmetico("OLEO DE PELE");
 	}
 
 	public List<Cliente> getClientes() {
@@ -49,6 +49,14 @@ public class VitalFarma {
 	
 	public void removePedido(Pedido pedido) {
         this.pedidos.remove(pedido);
+    }
+	
+	public Estoque getEstoque() {
+        return estoque;
+    }
+	
+	public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
     }
 
 }

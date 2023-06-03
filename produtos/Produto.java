@@ -4,7 +4,7 @@ import java.util.Map;
 public abstract class Produto implements IProduto {
     private String nome;
     private double preco;
-    private static Map<String, Double> mapDePrecos = new HashMap<String, Double>();
+    private static Map<String, Double> mapaDePrecos = new HashMap<String, Double>();
     
     public Produto(String nome) {
         this.nome = nome;
@@ -24,20 +24,26 @@ public abstract class Produto implements IProduto {
     }
     
     public static Map<String, Double> getMapDePrecos() {
-        return mapDePrecos;
+        return mapaDePrecos;
     }
     
     public void setMapDePrecos(Map<String, Double> mapDePrecos) {
-        Produto.mapDePrecos = mapDePrecos;
+        Produto.mapaDePrecos = mapDePrecos;
     }
     
+    @Override
     public boolean calcularPreco(String nomeProduto) {
     	String nomeFormatado = nomeProduto.toUpperCase();
-    	if (mapDePrecos.containsKey(nomeFormatado)) {
-    		setPreco(mapDePrecos.get(nomeFormatado));
+    	if (mapaDePrecos.containsKey(nomeFormatado)) {
+    		setPreco(mapaDePrecos.get(nomeFormatado));
             return true;
         } else {
             return false;
         }
+    }
+    
+    @Override
+    public String getDescricao() {
+    	return getNome() + " R$ " + getPreco();
     }
 }

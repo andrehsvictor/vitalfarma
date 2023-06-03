@@ -1,11 +1,7 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Remedio extends Produto {
-	private static final Map<String, Double> MAP_DE_PRECOS = new HashMap<>();
 
-	public Remedio(String nome, double preco) {
-		super(nome, preco);
+	public Remedio(String nome) {
+		super(nome);
 		calcularPreco(nome);
 	}
 

@@ -1,4 +1,4 @@
 public interface IProduto {
-    boolean setPreco(String nomeProdutoArg);
+    boolean calcularPreco(String nomeProdutoArg);
     String getDescricao();
 }

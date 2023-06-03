@@ -13,11 +13,11 @@ public class Cosmetico extends Produto {
 
     public Cosmetico(String nome) {
         super(nome, 0);
-        setPreco(nome);
+        calcularPreco(nome);
     }
 
     @Override
-    public boolean setPreco(String nomeCosmetico) {
+    public boolean calcularPreco(String nomeCosmetico) {
         String nomeFormatado = nomeCosmetico.toUpperCase();
 
         for (String nomeProduto : MAP_DE_PRECOS.keySet())

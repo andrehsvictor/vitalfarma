@@ -6,11 +6,11 @@ public class Remedio extends Produto {
 
 	public Remedio(String nome, double preco) {
 		super(nome, preco);
-		setPreco(nome);
+		calcularPreco(nome);
 	}
 
 	@Override
-	public boolean setPreco(String nomeRemedio) {
+	public boolean calcularPreco(String nomeRemedio) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 public class VitalFarma {
 	private List<Cliente> clientes = new ArrayList<>();
 	private List<Pedido> pedidos = new ArrayList<>();
-	private RepositorioDeProdutos estoque = new RepositorioDeProdutos();
+	private Estoque estoque = new Estoque();
 	
 	{
 		estoque.adicionarSuplemento(new Suplemento("Creatina"));
@@ -50,23 +50,5 @@ public class VitalFarma {
 	public void removePedido(Pedido pedido) {
         this.pedidos.remove(pedido);
     }
-	
-	public Cliente criarCliente(String nome, int idade) {
-		Cliente cliente = new Cliente(nome, idade);
-        addCliente(cliente);
-        return cliente;
-	}
-	
-	public Pedido criarPedido(Cliente cliente) {
-		Pedido pedido = new Pedido();
-        addPedido(pedido);
-        
-        return pedido;
-	}
-	
-	public void fazerPedido(Cliente cliente) {
-		Pedido pedido = criarPedido(cliente);
-		estoque.listarProdutos();
-    }
-	
+
 }

@@ -17,6 +17,15 @@ public class VitalFarma {
 		estoque.adicionarCosmetico("HIDRATANTE");
 		estoque.adicionarCosmetico("PROTETOR SOLAR");
 		estoque.adicionarCosmetico("OLEO DE PELE");
+		
+		estoque.adicionarRemedio("NEOSALDINA");
+        	estoque.adicionarRemedio("ENGOV");
+       		estoque.adicionarRemedio("DORIL");
+        	estoque.adicionarRemedio("DIPIRONA");
+        	estoque.adicionarRemedio("RIVOTRIL");
+        	estoque.adicionarRemedio("NEOSORO");
+        	estoque.adicionarRemedio("HISTAMIN");
+        	estoque.adicionarRemedio("LOSARTANA ");
 	}
 
 	public List<Cliente> getClientes() {

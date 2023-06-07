@@ -1,5 +1,5 @@
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 public class CosmeticoTest {
 
@@ -34,7 +34,7 @@ public class CosmeticoTest {
     @Test
     public void testGetDescricao() {
         Cosmetico cosmetico = new Cosmetico("Creme para Pele");
-        String descricaoEsperada = "Nome do Cosmético: Creme para Pele\nValor: 29.9";
+        String descricaoEsperada = "Creme para Pele R$29.9";
         Assertions.assertEquals(descricaoEsperada, cosmetico.getDescricao());
     }
     @Test

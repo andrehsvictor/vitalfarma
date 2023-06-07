@@ -29,7 +29,7 @@ public class VitalFarma {
 	}
 	
 	public VitalFarma() {
-		iniciar();
+		start();
     }
 
 	public List<Cliente> getClientes() {
@@ -47,6 +47,21 @@ public class VitalFarma {
 	public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
+	
+	public void criarNovoCliente(String nome, int idade) {
+		if(procurarClientePorNome(nome) == null) {
+			Cliente cliente = new Cliente(nome, idade);
+			addCliente(cliente);
+		};
+	}
+	
+	public Cliente procurarClientePorNome(String nome) {
+		for (Cliente cliente : clientes)
+            if (cliente.getNome().equals(nome))
+                return cliente;
+		
+		return null;
+	}
 	
 	public void addCliente(Cliente cliente) {
         this.clientes.add(cliente);
@@ -72,18 +87,14 @@ public class VitalFarma {
         this.estoque = estoque;
     }
 	
-	public void iniciar() {
+	private void start() {
 		exibirSloganDaFarmacia();
-		getEstoque().listarProdutos();
+		
 	}
 	
 	private void exibirSloganDaFarmacia() {
-		final String SLOGAN = 
-				"-------------------" + "\n" +
-				"    VITALFARMA" + "\n" +
-				"-------------------" + "\n";
-		
+		final String SLOGAN = "- V I T A L F A R M A -" + "\n";
 		System.out.println(SLOGAN);
 	}
-
+	
 }

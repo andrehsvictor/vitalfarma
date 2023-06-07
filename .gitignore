@@ -2,4 +2,5 @@
 .classpath
 .project
 *.prefs
-/VitalFarma.iml
+*.iml
+/.idea/

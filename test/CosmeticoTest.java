@@ -38,7 +38,7 @@ public class CosmeticoTest {
         Assertions.assertEquals(descricaoEsperada, cosmetico.getDescricao());
     }
     @Test
-    public void testExceção() {
+    public void testExcecao() {
         Assertions.assertThrows(ProdutoInvalidoException.class, () -> {
             Cosmetico cosmetico = new Cosmetico("Sabonete");
         });

@@ -23,21 +23,21 @@ public abstract class Produto {
         this.preco = preco;
     }
     
-    public static Map<String, Double> getMapDePrecos() {
+    public static Map<String, Double> getMapaDePrecos() {
         return mapaDePrecos;
     }
     
-    public void setMapDePrecos(Map<String, Double> mapDePrecos) {
+    public static void setMapaDePrecos(Map<String, Double> mapDePrecos) {
         Produto.mapaDePrecos = mapDePrecos;
     }
     
-    public boolean calcularPreco(String nomeProduto) {
-    	String nomeFormatado = nomeProduto.toUpperCase();
-    	if (mapaDePrecos.containsKey(nomeFormatado)) {
-    		setPreco(mapaDePrecos.get(nomeFormatado));
+    public boolean calcularPreco(String nomeDoProduto) {
+    	String nomeDoProdutoFormatado = nomeDoProduto.toUpperCase();
+    	if (mapaDePrecos.containsKey(nomeDoProdutoFormatado)) {
+    		setPreco(mapaDePrecos.get(nomeDoProdutoFormatado));
             return true;
         } else {
-            return false;
+        	throw new ProdutoInvalidoException("Produto invalido: " + nomeDoProdutoFormatado);
         }
     }
     

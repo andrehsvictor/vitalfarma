@@ -16,7 +16,7 @@ public class ProdutoTest {
         mapaDePrecos.put("PRODUTO1", 10.0);
         mapaDePrecos.put("PRODUTO2", 20.0);
         mapaDePrecos.put("PRODUTO3", 30.0);
-        Produto.setMapDePrecos(mapaDePrecos);
+        Produto.setMapaDePrecos(mapaDePrecos);
     }
 
     @Test

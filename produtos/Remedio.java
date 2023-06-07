@@ -8,7 +8,7 @@ public class Remedio extends Produto {
         getMapaDePrecos().put("RIVOTRIL", 14.70);
         getMapaDePrecos().put("NEOSORO", 6.70);
         getMapaDePrecos().put("HISTAMIN", 8.70);
-        getMapaDePrecos().put("LOSARTANA ", 32.70);
+        getMapaDePrecos().put("LOSARTANA", 32.70);
     }
         public Remedio(String nome) {
             super(nome);

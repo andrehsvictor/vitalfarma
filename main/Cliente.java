@@ -4,18 +4,14 @@ import java.time.Month;
 public class Cliente {
 	private String nome;
 	private int idade;
-	private int qtdCompras;
-	private boolean clienteRecorrente;
-	private boolean idoso;
-	private LocalDate comprasNoMes;
-	
+	private CartaoDeFidelidade cartaoDeFidelidade = new CartaoDeFidelidade();
+
 	public Cliente(String nome, int idade) {
 		this.nome = nome;
 		this.idade = idade;
-		qtdCompras = 0;
-		clienteRecorrente = false;
-		idoso = (idade >= 60) ? true : false;
-		comprasNoMes = null;
+		cartaoDeFidelidade.setQtdCompras(0);
+		cartaoDeFidelidade.setClienteRecorrente(false);
+		cartaoDeFidelidade.setComprasNoMes(null);
 	}
 
 	public String getNome() {
@@ -35,66 +31,59 @@ public class Cliente {
     }
 	
 	public int getQtdCompras() {
-        return qtdCompras;
+        return cartaoDeFidelidade.getQtdCompras();
     }
 	
 	public void setQtdCompras(int qtdCompras) {
-        this.qtdCompras = qtdCompras;
+        this.cartaoDeFidelidade.setQtdCompras(qtdCompras);
     }
 	
 	public boolean isClienteRecorrente() {
-        return clienteRecorrente;
+        return cartaoDeFidelidade.isClienteRecorrente();
     }
 	
 	public void setClienteRecorrente(boolean clienteRecorrente) {
-        this.clienteRecorrente = clienteRecorrente;
+        this.cartaoDeFidelidade.setClienteRecorrente(clienteRecorrente);
     }
-	
-	public boolean isIdoso() {
-		return idoso;
-	}
-
-	public void setIdoso(boolean idoso) {
-		this.idoso = idoso;
-	}
 
 	public LocalDate getComprasNoMes() {
-        return comprasNoMes;
+        return cartaoDeFidelidade.getComprasNoMes();
     }
 	
 	public void setComprasNoMes(LocalDate comprasNoMes) {
-        this.comprasNoMes = comprasNoMes;
+        this.cartaoDeFidelidade.setComprasNoMes(comprasNoMes);
     }
 	
 	public void realizarCompra(Pedido pedido) {
 		LocalDate dataAtual = LocalDate.now();
-		Month mesAtual = dataAtual.getMonth(),
-				comprasNoMesMonth = comprasNoMes.getMonth();
 		
-		boolean isComprasNoMesNull = (comprasNoMes == null),
-				areComprasNoMesMonthAndMesAtualDifferent = (comprasNoMesMonth != mesAtual);
+		Month mesAtual = dataAtual.getMonth();
+		Month comprasNoMesMonth = cartaoDeFidelidade.getComprasNoMes().getMonth();
 		
-		if (isComprasNoMesNull || areComprasNoMesMonthAndMesAtualDifferent) {
-			incrementarQtdCompras();
-        	comprasNoMes = dataAtual;
-		} else {
-			incrementarQtdCompras();
-		}
+		boolean isComprasNoMesNull = (cartaoDeFidelidade.getComprasNoMes() == null);
+		boolean areComprasNoMesMonthAndMesAtualDifferent = (comprasNoMesMonth != mesAtual);
 		
-		if(qtdCompras >= 5)
-			clienteRecorrente = true;
+		incrementarQtdCompras();
+		
+		if (isComprasNoMesNull || areComprasNoMesMonthAndMesAtualDifferent)
+        	cartaoDeFidelidade.setComprasNoMes(dataAtual);
+		
+		if(cartaoDeFidelidade.getQtdCompras() >= 5)
+			cartaoDeFidelidade.setClienteRecorrente(true);
 	}
 
 	private void incrementarQtdCompras() {
-		qtdCompras++;
+		cartaoDeFidelidade.setQtdCompras(cartaoDeFidelidade.getQtdCompras() + 1);
 	}
 	
 	public double calcularDesconto(double valorTotal) {
-		final double descontoClienteRecorrente = valorTotal * 0.3,
-				descontoIdoso = valorTotal * 0.5;
+		final double DESCONTO_CLIENTE_RECORRENTE = valorTotal * 0.3;
+		final double DESCONTO_IDOSO = valorTotal * 0.5;
+		double descontoTotal = 0;
 	
-		valorTotal -= clienteRecorrente ? descontoClienteRecorrente : 0;
-		valorTotal -= idoso ? descontoIdoso : 0;
+		descontoTotal += (cartaoDeFidelidade.isClienteRecorrente()) ? DESCONTO_CLIENTE_RECORRENTE : 0;
+		descontoTotal += (idade >= 60) ? DESCONTO_IDOSO : 0;
+		valorTotal -= descontoTotal;
 		
 		return valorTotal;
 	}

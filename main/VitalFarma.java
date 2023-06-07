@@ -27,6 +27,10 @@ public class VitalFarma {
         estoque.adicionarRemedio("HISTAMIN");
         estoque.adicionarRemedio("LOSARTANA ");
 	}
+	
+	public VitalFarma() {
+		iniciar();
+    }
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -67,5 +71,19 @@ public class VitalFarma {
 	public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
     }
+	
+	public void iniciar() {
+		exibirSloganDaFarmacia();
+		getEstoque().listarProdutos();
+	}
+	
+	private void exibirSloganDaFarmacia() {
+		final String SLOGAN = 
+				"-------------------" + "\n" +
+				"    VITALFARMA" + "\n" +
+				"-------------------" + "\n";
+		
+		System.out.println(SLOGAN);
+	}
 
 }

@@ -42,6 +42,6 @@ public abstract class Produto {
     }
     
     public String getDescricao() {
-    	return getNome() + " R$ " + getPreco();
+    	return getNome() + " R$" + getPreco();
     }
 }

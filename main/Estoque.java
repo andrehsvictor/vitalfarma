@@ -21,8 +21,12 @@ public class Estoque {
         this.cosmeticos.add(cosmetico);
     }
 	
-	public void removerRemedio(Remedio remedio) {
-        this.remedios.remove(remedio);
+	public void removerRemedioPorNome(String nome) {
+        Remedio remedio = (Remedio) procurarProdutoPorNome(nome);
+        boolean isRemedioNotNull = (remedio != null);
+        
+        if(isRemedioNotNull)
+        	this.remedios.remove(remedio);
     }
 	
 	public void removerSuplementoPorNome(String nome) {
@@ -52,17 +56,26 @@ public class Estoque {
 			if(cosmetico.getNome().matches(nomeFormatado))
 				return cosmetico;
 		
+		for(Remedio remedio : remedios)
+			if(remedio.getNome().matches(nomeFormatado))
+                return remedio;
+		
 		return null;
 	}
 
 	public void listarProdutos() {
-		String labelSuplementos = "\n---------- Suplementos:",
-				labelCosmeticos = "\n---------- Cosmeticos:";
+		String labelSuplementos = "---------- Suplementos:";
+		String labelCosmeticos = "---------- Cosmeticos:";
+		String labelRemedios = "---------- Remedios:";
+		
 		System.out.println(labelCosmeticos);
 		for (Cosmetico cosmetico : cosmeticos)
 			System.out.println(cosmetico.getDescricao());
 		System.out.println(labelSuplementos);
         for (Suplemento suplemento : suplementos)
         	System.out.println(suplemento.getDescricao());
+        System.out.println(labelRemedios);
+        for (Remedio remedio : remedios)
+        	System.out.println(remedio.getDescricao());
 	}
 }

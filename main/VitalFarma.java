@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class VitalFarma {
 	private List<Cliente> clientes = new ArrayList<>();
@@ -48,7 +49,7 @@ public class VitalFarma {
         this.pedidos = pedidos;
     }
 	
-	public void criarNovoCliente(String nome, int idade) {
+	public void adicionarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
 			Cliente cliente = new Cliente(nome, idade);
 			addCliente(cliente);
@@ -89,6 +90,27 @@ public class VitalFarma {
 	
 	private void start() {
 		exibirSloganDaFarmacia();
+		getEstoque().listarProdutos();
+		Scanner sc = new Scanner(System.in);
+		String remedioDesejado = sc.nextLine().toUpperCase();
+		
+		if(remedioDesejado.equals(getEstoque().procurarProdutoPorNome(remedioDesejado).getNome())) {
+			String nomeCliente = sc.nextLine()
+					.toUpperCase()
+                    .strip();
+			int idadeCliente = sc.nextInt();
+			
+			adicionarCliente(nomeCliente, idadeCliente);
+			
+			Cliente c = procurarClientePorNome(nomeCliente);
+			Pedido p = new Pedido();
+			p.adicionarProduto(getEstoque().procurarProdutoPorNome(remedioDesejado));
+			c.realizarCompra(p);
+			p.imprimirPedido();
+			
+			
+		}
+		
 		
 	}
 	

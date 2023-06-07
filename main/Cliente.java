@@ -11,7 +11,7 @@ public class Cliente {
 		this.idade = idade;
 		cartaoDeFidelidade.setQtdCompras(0);
 		cartaoDeFidelidade.setClienteRecorrente(false);
-		cartaoDeFidelidade.setComprasNoMes(null);
+		cartaoDeFidelidade.setComprasNoMes(LocalDate.now());
 	}
 
 	public String getNome() {
@@ -70,6 +70,8 @@ public class Cliente {
 		
 		if(cartaoDeFidelidade.getQtdCompras() >= 5)
 			cartaoDeFidelidade.setClienteRecorrente(true);
+		
+		System.out.println("Compra realizada com sucesso");
 	}
 
 	private void incrementarQtdCompras() {

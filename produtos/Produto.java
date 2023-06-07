@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Produto implements IProduto {
+public abstract class Produto {
     private String nome;
     private double preco;
     private static Map<String, Double> mapaDePrecos = new HashMap<String, Double>();
@@ -31,7 +31,6 @@ public abstract class Produto implements IProduto {
         Produto.mapaDePrecos = mapDePrecos;
     }
     
-    @Override
     public boolean calcularPreco(String nomeProduto) {
     	String nomeFormatado = nomeProduto.toUpperCase();
     	if (mapaDePrecos.containsKey(nomeFormatado)) {
@@ -42,7 +41,6 @@ public abstract class Produto implements IProduto {
         }
     }
     
-    @Override
     public String getDescricao() {
     	return getNome() + " R$ " + getPreco();
     }

@@ -6,8 +6,9 @@ public class Estoque {
 	private List<Suplemento> suplementos = new ArrayList<>();
 	private List<Cosmetico> cosmeticos = new ArrayList<>();
 	
-	public void adicionarRemedio(Remedio remedio) {
-        this.remedios.add(remedio);
+	public void adicionarRemedio(String nomeRemedio) {
+        	Remedio remedio = new Remedio(nomeRemedio);
+		this.remedios.add(remedio);
     }
 	
 	public void adicionarSuplemento(String nomeSuplemento) {

@@ -34,7 +34,7 @@ public class Pedido {
         return dataHora.format(formatter);
     }
     public void imprimirPedido() {
-        System.out.println("----- PEDIDO VITAL FARMA -----");
+        System.out.println("----- PEDIDO VITALFARMA -----");
         System.out.println("Data e Hora do Pedido: " + dataToString());
         System.out.println("Produtos:");
         for (Produto produto : produtos) {

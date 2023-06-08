@@ -26,7 +26,7 @@ public class VitalFarma {
         estoque.adicionarRemedio("RIVOTRIL");
         estoque.adicionarRemedio("NEOSORO");
         estoque.adicionarRemedio("HISTAMIN");
-        estoque.adicionarRemedio("LOSARTANA ");
+        estoque.adicionarRemedio("LOSARTANA");
 	}
 	
 	public VitalFarma() {

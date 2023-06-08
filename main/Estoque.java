@@ -7,7 +7,7 @@ public class Estoque {
 	private List<Cosmetico> cosmeticos = new ArrayList<>();
 	
 	public void adicionarRemedio(String nomeRemedio) {
-        	Remedio remedio = new Remedio(nomeRemedio);
+        Remedio remedio = new Remedio(nomeRemedio);
 		this.remedios.add(remedio);
     }
 	

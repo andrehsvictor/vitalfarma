@@ -63,19 +63,20 @@ public class Estoque {
 		return null;
 	}
 
-	public void listarProdutos() {
-		String labelSuplementos = "---------- Suplementos:";
-		String labelCosmeticos = "---------- Cosmeticos:";
-		String labelRemedios = "---------- Remedios:";
+	public void exibirProdutos() {
+		String labelSuplementos = "---------------- Suplementos";
+		String labelCosmeticos = "----------------- Cosmeticos";
+		String labelRemedios = "------------------- Remedios";
 		
 		System.out.println(labelCosmeticos);
 		for (Cosmetico cosmetico : cosmeticos)
-			System.out.println(cosmetico.getDescricao());
+			cosmetico.exibirDescricao();
 		System.out.println(labelSuplementos);
         for (Suplemento suplemento : suplementos)
-        	System.out.println(suplemento.getDescricao());
+        	suplemento.exibirDescricao();
         System.out.println(labelRemedios);
         for (Remedio remedio : remedios)
-        	System.out.println(remedio.getDescricao());
+        	remedio.exibirDescricao();
 	}
+	
 }

@@ -6,6 +6,9 @@ public class CartaoDeFidelidade {
 	private LocalDate comprasNoMes;
 
 	public CartaoDeFidelidade() {
+		this.qtdCompras = 0;
+        this.clienteRecorrente = false;
+        this.comprasNoMes = LocalDate.now();
 	}
 
 	public int getQtdCompras() {

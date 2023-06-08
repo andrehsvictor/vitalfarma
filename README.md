@@ -19,7 +19,7 @@ Umas paradas padronizadas pra facilitar a manutenção do projeto.
 ## UML do projeto:
 ```mermaid
 ---
-title:
+title: VitalFarma
 ---
 classDiagram
     note "Para simplificar o diagrama, não foram incluídos métodos getters,

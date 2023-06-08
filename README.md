@@ -22,6 +22,8 @@ Umas paradas padronizadas pra facilitar a manutenção do projeto.
 title:
 ---
 classDiagram
+    note "Para simplificar o diagrama, não foram incluídos métodos getters,
+    setters, métodos CRUD como add e remove e métodos privados"
     class Produto {
         <<abstract>>
         -nome: String

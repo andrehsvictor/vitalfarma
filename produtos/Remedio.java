@@ -31,7 +31,7 @@ public class Remedio extends Produto {
     @Override
     public void exibirDescricao() {
     	if(isSujeitoAPrescricao(getNome()))
-    		System.out.printf("%-20s R$%-2.2f [Sujeito a prescricao medica]%n", getNome(), getPreco());
+    		System.out.printf("%-20s R$%.2f [Sujeito a prescricao medica]%n", getNome(), getPreco());
     	else
     		super.exibirDescricao();;
     }

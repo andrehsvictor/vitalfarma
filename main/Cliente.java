@@ -1,17 +1,18 @@
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 public class Cliente {
 	private String nome;
 	private int idade;
-	private CartaoDeFidelidade cartaoDeFidelidade = new CartaoDeFidelidade();
+	private CartaoDeFidelidade cartaoDeFidelidade;
+	private Pedido pedido;
 
 	public Cliente(String nome, int idade) {
 		this.nome = nome;
 		this.idade = idade;
-		cartaoDeFidelidade.setQtdCompras(0);
-		cartaoDeFidelidade.setClienteRecorrente(false);
-		cartaoDeFidelidade.setComprasNoMes(LocalDate.now());
+		cartaoDeFidelidade = new CartaoDeFidelidade();
+		pedido = new Pedido();
 	}
 
 	public String getNome() {
@@ -54,7 +55,11 @@ public class Cliente {
         this.cartaoDeFidelidade.setComprasNoMes(comprasNoMes);
     }
 	
-	public void realizarCompra(Pedido pedido) {
+	public Pedido getPedido() {
+		return pedido;
+	}
+	
+	public void realizarCompra() {
 		LocalDate dataAtual = LocalDate.now();
 		
 		Month mesAtual = dataAtual.getMonth();
@@ -78,7 +83,7 @@ public class Cliente {
 		cartaoDeFidelidade.setQtdCompras(cartaoDeFidelidade.getQtdCompras() + 1);
 	}
 	
-	public double calcularDesconto(double valorTotal) {
+	private double calcularDesconto(double valorTotal) {
 		final double DESCONTO_CLIENTE_RECORRENTE = valorTotal * 0.3;
 		final double DESCONTO_IDOSO = valorTotal * 0.5;
 		double descontoTotal = 0;
@@ -89,4 +94,32 @@ public class Cliente {
 		
 		return valorTotal;
 	}
+	
+	public String dataDoPedidoToString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return pedido.getDataHora().format(formatter);
+    }
+	
+    public String calcularValorTotal() {
+    	double valorTotal = 0;
+    	
+        for (Produto produto : pedido.getProdutos())
+            valorTotal += produto.getPreco();
+        
+        double valorDescontado = calcularDesconto(valorTotal);
+        pedido.setValorTotal(valorDescontado);
+        
+		String stringValorDescontado = String.format("R$ %.2f", valorDescontado) + " (Com desconto)";
+		String stringValorTotal = String.format("R$ %.2f", valorTotal);
+        
+		return temDesconto() ? stringValorDescontado : stringValorTotal;
+    }
+
+	private boolean temDesconto() {
+		double valorTotal = pedido.getValorTotal();
+		double valorDescontado = calcularDesconto(valorTotal);
+		
+		return valorDescontado != valorTotal;
+	}
+    
 }

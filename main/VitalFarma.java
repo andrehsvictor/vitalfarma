@@ -90,11 +90,12 @@ public class VitalFarma {
 	
 	private void start() {
 		exibirSloganDaFarmacia();
-		getEstoque().listarProdutos();
+		getEstoque().exibirProdutos();
 		Scanner sc = new Scanner(System.in);
-		String remedioDesejado = sc.nextLine().toUpperCase();
+		String nomeDoProdutoDesejado = sc.nextLine().toUpperCase();
+		Produto produtoDesejado = getEstoque().procurarProdutoPorNome(nomeDoProdutoDesejado);
 		
-		if(remedioDesejado.equals(getEstoque().procurarProdutoPorNome(remedioDesejado).getNome())) {
+		if(nomeDoProdutoDesejado.equals(produtoDesejado.getNome())) {
 			String nomeCliente = sc.nextLine()
 					.toUpperCase()
                     .strip();
@@ -102,12 +103,11 @@ public class VitalFarma {
 			
 			adicionarCliente(nomeCliente, idadeCliente);
 			
-			Cliente c = procurarClientePorNome(nomeCliente);
-			Pedido p = new Pedido();
-			p.adicionarProduto(getEstoque().procurarProdutoPorNome(remedioDesejado));
-			p.imprimirPedido();
-			c.realizarCompra(p);
-			
+			Cliente cliente = procurarClientePorNome(nomeCliente);
+			cliente.getPedido().adicionarProduto(produtoDesejado);
+			limparConsole();
+			exibirPedido(cliente);
+			cliente.realizarCompra();
 			
 		}
 		
@@ -119,4 +119,19 @@ public class VitalFarma {
 		System.out.println(SLOGAN);
 	}
 	
+    public void exibirPedido(Cliente cliente) {
+        System.out.println("---------- PEDIDO VITALFARMA ----------");
+        System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
+        System.out.println("Produtos:");
+        for (Produto produto : cliente.getPedido().getProdutos()) {
+            produto.exibirDescricao();
+        }
+        System.out.println("Valor Total: " + cliente.calcularValorTotal());
+        System.out.println("Cliente: " + cliente.getNome());
+        System.out.println("---------------------------------------");
+    }
+    
+    private void limparConsole() {
+    	for(int i = 0; i < 100; i++) System.out.println();
+    }
 }

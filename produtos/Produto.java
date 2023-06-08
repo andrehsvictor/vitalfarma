@@ -41,7 +41,7 @@ public abstract class Produto {
         }
     }
     
-    public String getDescricao() {
-    	return getNome() + " R$" + getPreco();
+    public void exibirDescricao() {
+    	System.out.printf("%-20s R$%.2f%n", nome, preco);
     }
 }

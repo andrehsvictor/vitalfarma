@@ -1,9 +1,6 @@
 # VitalFarma
 
-Este repositório é sobre um projeto final para a disciplina de Linguagem da Programação,
-utilizando todos os conceitos aprendidos no decorrer da disciplina. O projeto consiste
-numa farmácia, que aplica conceitos de POO e alguns Design Patterns, bem como boas práticas
-para otimização de código.
+Este repositório contém o projeto final para a disciplina de Linguagem de Programação, abrangendo a aplicação prática de todos os conceitos aprendidos ao longo do curso. O projeto é uma implementação de um sistema de gerenciamento para uma farmácia, onde são utilizados princípios de Programação Orientada a Objetos (POO), além de alguns Design Patterns, visando aprimorar a estrutura e a funcionalidade do código, seguindo também boas práticas de otimização.
 
 ## Convenções
 

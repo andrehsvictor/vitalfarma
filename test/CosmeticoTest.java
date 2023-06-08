@@ -35,7 +35,7 @@ public class CosmeticoTest {
     public void testGetDescricao() {
         Cosmetico cosmetico = new Cosmetico("Creme para Pele");
         String descricaoEsperada = "Creme para Pele R$29.9";
-        Assertions.assertEquals(descricaoEsperada, cosmetico.getDescricao());
+        Assertions.assertEquals(descricaoEsperada, cosmetico.exibirDescricao());
     }
     @Test
     public void testExcecao() {

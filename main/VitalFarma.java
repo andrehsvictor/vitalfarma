@@ -37,18 +37,34 @@ public class VitalFarma {
 		return clientes;
 	}
 
+	public List<Pedido> getPedidos() {
+	    return pedidos;
+	}
+
+	public Estoque getEstoque() {
+	    return estoque;
+	}
+
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}
-	
-	public List<Pedido> getPedidos() {
-        return pedidos;
-    }
 	
 	public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
 	
+	public void setEstoque(Estoque estoque) {
+	    this.estoque = estoque;
+	}
+
+	public void addCliente(Cliente cliente) {
+	    this.clientes.add(cliente);
+	}
+
+	public void addPedido(Pedido pedido) {
+	    this.pedidos.add(pedido);
+	}
+
 	public void adicionarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
 			Cliente cliente = new Cliente(nome, idade);
@@ -56,6 +72,14 @@ public class VitalFarma {
 		};
 	}
 	
+	public void removeCliente(Cliente cliente) {
+	    this.clientes.remove(cliente);
+	}
+
+	public void removePedido(Pedido pedido) {
+	    this.pedidos.remove(pedido);
+	}
+
 	public Cliente procurarClientePorNome(String nome) {
 		for (Cliente cliente : clientes)
             if (cliente.getNome().equals(nome))
@@ -63,30 +87,6 @@ public class VitalFarma {
 		
 		return null;
 	}
-	
-	public void addCliente(Cliente cliente) {
-        this.clientes.add(cliente);
-    }
-	
-	public void addPedido(Pedido pedido) {
-        this.pedidos.add(pedido);
-    }
-	
-	public void removeCliente(Cliente cliente) {
-        this.clientes.remove(cliente);
-    }
-	
-	public void removePedido(Pedido pedido) {
-        this.pedidos.remove(pedido);
-    }
-	
-	public Estoque getEstoque() {
-        return estoque;
-    }
-	
-	public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
-    }
 	
 	private void start() {
 		exibirSloganDaFarmacia();
@@ -104,7 +104,7 @@ public class VitalFarma {
 			adicionarCliente(nomeCliente, idadeCliente);
 			
 			Cliente cliente = procurarClientePorNome(nomeCliente);
-			cliente.getPedido().adicionarProduto(produtoDesejado);
+			cliente.getPedido().addProduto(produtoDesejado);
 			limparConsole();
 			exibirPedido(cliente);
 			cliente.realizarCompra();
@@ -114,12 +114,7 @@ public class VitalFarma {
 		
 	}
 	
-	private void exibirSloganDaFarmacia() {
-		final String SLOGAN = "- V I T A L F A R M A -" + "\n";
-		System.out.println(SLOGAN);
-	}
-	
-    public void exibirPedido(Cliente cliente) {
+	public void exibirPedido(Cliente cliente) {
         System.out.println("---------- PEDIDO VITALFARMA ----------");
         System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
         System.out.println("Produtos:");
@@ -131,7 +126,12 @@ public class VitalFarma {
         System.out.println("---------------------------------------");
     }
     
-    private void limparConsole() {
+    private void exibirSloganDaFarmacia() {
+		final String SLOGAN = "- V I T A L F A R M A -" + "\n";
+		System.out.println(SLOGAN);
+	}
+
+	private void limparConsole() {
     	for(int i = 0; i < 100; i++) System.out.println();
     }
 }

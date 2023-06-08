@@ -15,12 +15,12 @@ public class CartaoDeFidelidade {
 		return qtdCompras;
 	}
 
-	public void setQtdCompras(int qtdCompras) {
-		this.qtdCompras = qtdCompras;
-	}
-
 	public boolean isClienteRecorrente() {
 		return clienteRecorrente;
+	}
+
+	public void setQtdCompras(int qtdCompras) {
+		this.qtdCompras = qtdCompras;
 	}
 
 	public void setClienteRecorrente(boolean clienteRecorrente) {

@@ -19,45 +19,25 @@ public class Cliente {
         return nome;
     }
 	
+	public int getIdade() {
+	    return idade;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
 	public void setNome(String nome) {
         this.nome = nome;
-    }
-	
-	public int getIdade() {
-        return idade;
     }
 	
 	public void setIdade(int idade) {
         this.idade = idade;
     }
 	
-	public int getQtdCompras() {
-        return cartaoDeFidelidade.getQtdCompras();
+	public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
-	
-	public void setQtdCompras(int qtdCompras) {
-        this.cartaoDeFidelidade.setQtdCompras(qtdCompras);
-    }
-	
-	public boolean isClienteRecorrente() {
-        return cartaoDeFidelidade.isClienteRecorrente();
-    }
-	
-	public void setClienteRecorrente(boolean clienteRecorrente) {
-        this.cartaoDeFidelidade.setClienteRecorrente(clienteRecorrente);
-    }
-
-	public LocalDate getComprasNoMes() {
-        return cartaoDeFidelidade.getComprasNoMes();
-    }
-	
-	public void setComprasNoMes(LocalDate comprasNoMes) {
-        this.cartaoDeFidelidade.setComprasNoMes(comprasNoMes);
-    }
-	
-	public Pedido getPedido() {
-		return pedido;
-	}
 	
 	public void realizarCompra() {
 		LocalDate dataAtual = LocalDate.now();
@@ -79,22 +59,6 @@ public class Cliente {
 		System.out.println("Compra realizada com sucesso");
 	}
 
-	private void incrementarQtdCompras() {
-		cartaoDeFidelidade.setQtdCompras(cartaoDeFidelidade.getQtdCompras() + 1);
-	}
-	
-	private double calcularDesconto(double valorTotal) {
-		final double DESCONTO_CLIENTE_RECORRENTE = valorTotal * 0.3;
-		final double DESCONTO_IDOSO = valorTotal * 0.5;
-		double descontoTotal = 0;
-	
-		descontoTotal += (cartaoDeFidelidade.isClienteRecorrente()) ? DESCONTO_CLIENTE_RECORRENTE : 0;
-		descontoTotal += (idade >= 60) ? DESCONTO_IDOSO : 0;
-		valorTotal -= descontoTotal;
-		
-		return valorTotal;
-	}
-	
 	public String dataDoPedidoToString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         return pedido.getDataHora().format(formatter);
@@ -114,6 +78,22 @@ public class Cliente {
         
 		return temDesconto() ? stringValorDescontado : stringValorTotal;
     }
+
+	private void incrementarQtdCompras() {
+		cartaoDeFidelidade.setQtdCompras(cartaoDeFidelidade.getQtdCompras() + 1);
+	}
+
+	private double calcularDesconto(double valorTotal) {
+		final double DESCONTO_CLIENTE_RECORRENTE = valorTotal * 0.3;
+		final double DESCONTO_IDOSO = valorTotal * 0.5;
+		double descontoTotal = 0;
+	
+		descontoTotal += (cartaoDeFidelidade.isClienteRecorrente()) ? DESCONTO_CLIENTE_RECORRENTE : 0;
+		descontoTotal += (idade >= 60) ? DESCONTO_IDOSO : 0;
+		valorTotal -= descontoTotal;
+		
+		return valorTotal;
+	}
 
 	private boolean temDesconto() {
 		double valorTotal = pedido.getValorTotal();

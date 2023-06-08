@@ -15,19 +15,6 @@ public class Remedio extends Produto {
             super(nome);
     }
     
-    private boolean isSujeitoAPrescricao(String nomeDoRemedio) {
-    	switch (nomeDoRemedio) {
-    	case "RIVOTRIL":
-    		return true;
-    	case "LOSARTANA":
-    		return true;
-    	case "NEOSORO":
-    		return true;
-    	default:
-    		return false;
-    	}
-    } 
-    
     @Override
     public void exibirDescricao() {
     	if(isSujeitoAPrescricao(getNome()))
@@ -35,4 +22,17 @@ public class Remedio extends Produto {
     	else
     		super.exibirDescricao();;
     }
+
+	private boolean isSujeitoAPrescricao(String nomeDoRemedio) {
+		switch (nomeDoRemedio) {
+		case "RIVOTRIL":
+			return true;
+		case "LOSARTANA":
+			return true;
+		case "NEOSORO":
+			return true;
+		default:
+			return false;
+		}
+	}
 }

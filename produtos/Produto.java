@@ -19,12 +19,16 @@ public abstract class Produto {
         return preco;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-    
     public static Map<String, Double> getMapaDePrecos() {
-        return mapaDePrecos;
+	    return mapaDePrecos;
+	}
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+	public void setPreco(double preco) {
+        this.preco = preco;
     }
     
     public static void setMapaDePrecos(Map<String, Double> mapDePrecos) {

@@ -13,36 +13,35 @@ public class Pedido {
         dataHora = LocalDateTime.now();
     }
 
-    public void adicionarProduto(Produto produto) {
-        produtos.add(produto);
-    }
-
-    public void removerProduto(Produto produto) {
-        produtos.remove(produto);
-    }
-
     public List<Produto> getProdutos() {
 		return produtos;
 	}
+    
+	public double getValorTotal() {
+        return this.valorTotal;
+    }
+	
+	public LocalDateTime getDataHora() {
+        return dataHora;
+    }
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
 	
-	public double getValorTotal() {
-        return this.valorTotal;
-    }
-	
 	public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
-    }
-	
-	public LocalDateTime getDataHora() {
-        return dataHora;
     }
 	
 	public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
 
+    public void addProduto(Produto produto) {
+        produtos.add(produto);
+    }
+
+    public void removeProduto(Produto produto) {
+        produtos.remove(produto);
+    }
 }

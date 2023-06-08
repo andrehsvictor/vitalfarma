@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,25 +21,28 @@ public class Pedido {
         produtos.remove(produto);
     }
 
-    public double calcularValorTotal() {
-        valorTotal = 0.0;
-        for (Produto produto : produtos) {
-            valorTotal += produto.getPreco();
-        }
-        return valorTotal;
+    public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+	
+	public double getValorTotal() {
+        return this.valorTotal;
     }
-    public String dataToString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return dataHora.format(formatter);
+	
+	public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
-    public void imprimirPedido() {
-        System.out.println("----- PEDIDO VITALFARMA -----");
-        System.out.println("Data e Hora do Pedido: " + dataToString());
-        System.out.println("Produtos:");
-        for (Produto produto : produtos) {
-            System.out.println(produto.getDescricao());
-        }
-        System.out.println("Valor Total: R$" + calcularValorTotal());
-        System.out.println("------------------");
+	
+	public LocalDateTime getDataHora() {
+        return dataHora;
     }
+	
+	public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+
 }

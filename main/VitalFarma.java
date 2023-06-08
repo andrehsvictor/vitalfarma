@@ -105,8 +105,8 @@ public class VitalFarma {
 			Cliente c = procurarClientePorNome(nomeCliente);
 			Pedido p = new Pedido();
 			p.adicionarProduto(getEstoque().procurarProdutoPorNome(remedioDesejado));
-			c.realizarCompra(p);
 			p.imprimirPedido();
+			c.realizarCompra(p);
 			
 			
 		}

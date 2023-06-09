@@ -31,9 +31,9 @@ public class VitalFarma implements Serializable {
         estoque.adicionarRemedio("LOSARTANA");
 	}
 
-	public void start() {
+	public void iniciar() {
 		exibirLogoDaFarmacia();
-		iniciarMenuDeOpcoes();
+		iniciarMenuDeOperacoes();
 	}
 
 	public List<Cliente> getClientes() {
@@ -76,14 +76,14 @@ public class VitalFarma implements Serializable {
 	    this.pedidos.remove(pedido);
 	}
 
-	private void cadastrarCliente(String nome, int idade) {
+	public void cadastrarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
 			Cliente cliente = new Cliente(nome, idade);
 			addCliente(cliente);
 		}
 	}
 
-	private Cliente procurarClientePorNome(String nome) {
+	public Cliente procurarClientePorNome(String nome) {
 		for (Cliente cliente : clientes)
             if (cliente.getNome().equals(nome))
                 return cliente;
@@ -91,19 +91,7 @@ public class VitalFarma implements Serializable {
 		return null;
 	}
 	
-	private void exibirPedido(Cliente cliente) {
-        System.out.println("---------- PEDIDO VITALFARMA ----------");
-        System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
-        System.out.println("Produtos:");
-        for (Produto produto : cliente.getPedido().getProdutos()) {
-            produto.exibirDescricao();
-        }
-        System.out.println("Valor Total: " + cliente.calcularValorTotal());
-        System.out.println("Cliente: " + cliente.getNome());
-        System.out.println("---------------------------------------");
-    }
-    
-    private void iniciarCompras() {
+	public void iniciarCompras() {
     	int opcao;
     	final int COMPRAR_MAIS = 1;
     	final int TERMINAR = 2;
@@ -111,18 +99,13 @@ public class VitalFarma implements Serializable {
     	final int SAIR = 4;
     	
     	limparConsole();
+    	
 		Cliente cliente = processarCliente();
 		exibirProdutosDoEstoque();
 		adicionarProdutoAoPedido(cliente);
+		
 		do {
-			String desejaContinuarLabel = "---------------- OPCOES ---------------\n" +
-			"1 - Comprar mais\n" +
-            "2 - Terminar pedido\n" +
-            "3 - Cancelar compra\n" +
-            "4 - Sair\n" +
-            "---------------------------------------";
-			
-			System.out.println(desejaContinuarLabel);
+			exibirOpcoesCompras();
 			opcao = intInput("-> Digite uma opcao: ");
 			
 			switch(opcao) {
@@ -133,10 +116,7 @@ public class VitalFarma implements Serializable {
                 break;
 			case TERMINAR:
 				limparConsole();
-                System.out.println("[*] - Pedido terminado com sucesso");
-                exibirPedido(cliente);
-                cliente.realizarCompra();
-                cliente.getPedido().removeAllProdutos();
+                terminarPedido(cliente);
                 break;
 			case CANCELAR_COMPRA:
 				limparConsole();
@@ -146,37 +126,68 @@ public class VitalFarma implements Serializable {
 			case SAIR:
 				System.exit(0);
             default:
-            	System.out.println("[!] - Opcao invalida");
+            	exibirMensagemDeErro("Opcao invalida");
             	break;
 			}
 		} while(opcao != SAIR && opcao != CANCELAR_COMPRA);
 	}
 
-	private void adicionarProdutoAoPedido(Cliente cliente) {
+	public void iniciarMenuDeOperacoes() {
+		exibirOperacoes();
+		int opcao = intInput("-> Digite uma opcao: ");
+		final int COMPRAR = 1;
+		final int EXIBIR_CLIENTES = 2;
+		final int INFO = 3;
+		final int SAIR = 4;
+
+		do {
+			switch(opcao) {
+			case COMPRAR:
+				limparConsole();
+				iniciarCompras();
+				break;
+			case EXIBIR_CLIENTES:
+				break;
+			case INFO:
+				break;
+			case SAIR:
+				System.exit(0);
+				break;
+			default:
+				limparConsole();
+				exibirLogoDaFarmacia();
+				exibirMensagemDeErro("Opcao invalida!");
+				break;
+			}
+			exibirOperacoes();
+			opcao = intInput("Digite uma opcao: ");
+		} while(opcao != 4);
+	}
+
+	public void adicionarProdutoAoPedido(Cliente cliente) {
 		String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ")
 				.toUpperCase();
 		Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
-		boolean produtoDesejadoExisteNoEstoque = nomeDoProdutoDesejado.equals(produto.getNome());
 		limparConsole();
-		if(produtoDesejadoExisteNoEstoque) {
+		if(produto != null) {
 			cliente.getPedido().addProduto(produto);
 			System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
 		} else {
-			System.out.println("[!] - Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
+			exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
 		}
 	}
 
-	private Produto procurarProdutoNoEstoque(String nomeDoProduto) {
+	public Produto procurarProdutoNoEstoque(String nomeDoProduto) {
 		return getEstoque().procurarProdutoPorNome(nomeDoProduto);
 	}
 
-	private Cliente processarCliente() {
+	public Cliente processarCliente() {
 		String nomeCliente = stringInput("Digite seu nome: ")
 				.toLowerCase();
 		Cliente cliente = procurarClientePorNome(nomeCliente);
 		
 		if(cliente == null) {
-			System.out.println("[!] - Cliente inexistente. Iniciando cadastramento...");
+			exibirMensagemDeErro("Cliente inexistente. Iniciando cadastramento...");
 			int idadeCliente = intInput("Digite a idade do cliente: ");
 			limparConsole();
 			System.out.println("[*] - Cliente cadastrado com sucesso");
@@ -189,34 +200,36 @@ public class VitalFarma implements Serializable {
 		return procurarClientePorNome(nomeCliente);
 	}
 
-	private void iniciarMenuDeOpcoes() {
-    	exibirMenu();
-		int opcao = intInput("-> Digite uma opcao: ");
-		final int COMPRAR = 1;
-		final int EXIBIR_CLIENTES = 2;
-		final int SAIR = 4;
-		
-		do {
-			switch(opcao) {
-			case COMPRAR:
-				limparConsole();
-				iniciarCompras();
-				break;
-			case EXIBIR_CLIENTES:
-				break;
-			case SAIR:
-				break;
-			default:
-				limparConsole();
-				System.out.println("[!] - Digite uma opcao valida");
-				break;
-			}
-			exibirMenu();
-			opcao = intInput("Digite uma opcao: ");
-		} while(opcao != 4);
+	public void exibirPedido(Cliente cliente) {
+	    System.out.println("---------- PEDIDO VITALFARMA ----------");
+	    System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
+	    System.out.println("Produtos:");
+	    for (Produto produto : cliente.getPedido().getProdutos()) {
+	        produto.exibirDescricao();
+	    }
+	    System.out.println("Valor Total: " + cliente.calcularValorTotal());
+	    System.out.println("Cliente: " + cliente.getNome());
+	    System.out.println("---------------------------------------");
 	}
 
-	private void exibirMenu() {
+	private void exibirOpcoesCompras() {
+		String opcoes = "---------------- OPCOES ---------------\n" +
+		"1 - Comprar mais\n" +
+		"2 - Terminar pedido\n" +
+		"3 - Cancelar compra\n" +
+		"4 - Sair\n" +
+		"---------------------------------------";
+		System.out.println(opcoes);
+	}
+
+	private void terminarPedido(Cliente cliente) {
+		System.out.println("[*] - Pedido terminado com sucesso");
+		exibirPedido(cliente);
+		cliente.realizarCompra();
+		cliente.getPedido().removeAllProdutos();
+	}
+
+	private void exibirOperacoes() {
 		System.out.println("----------------- MENU ----------------");
         System.out.println("1 - Comprar");
         System.out.println("2 - Exibir Clientes");
@@ -227,6 +240,10 @@ public class VitalFarma implements Serializable {
 
 	private void exibirProdutosDoEstoque() {
 		getEstoque().exibirProdutos();
+	}
+	
+	private void exibirMensagemDeErro(String mensagem) {
+		System.out.println("[!] - " + mensagem);
 	}
 
 	private void exibirLogoDaFarmacia() {

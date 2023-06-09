@@ -68,19 +68,19 @@ public class VitalFarma implements Serializable {
 	    this.pedidos.add(pedido);
 	}
 
-	private void cadastrarCliente(String nome, int idade) {
-		if(procurarClientePorNome(nome) == null) {
-			Cliente cliente = new Cliente(nome, idade);
-			addCliente(cliente);
-		}
-	}
-	
 	public void removeCliente(Cliente cliente) {
 	    this.clientes.remove(cliente);
 	}
 
 	public void removePedido(Pedido pedido) {
 	    this.pedidos.remove(pedido);
+	}
+
+	private void cadastrarCliente(String nome, int idade) {
+		if(procurarClientePorNome(nome) == null) {
+			Cliente cliente = new Cliente(nome, idade);
+			addCliente(cliente);
+		}
 	}
 
 	private Cliente procurarClientePorNome(String nome) {
@@ -107,7 +107,7 @@ public class VitalFarma implements Serializable {
     	int opcao;
     	final int COMPRAR_MAIS = 1;
     	final int TERMINAR = 2;
-    	final int CANCELAR_COMPRAR = 3;
+    	final int CANCELAR_COMPRA = 3;
     	final int SAIR = 4;
     	
     	limparConsole();
@@ -136,12 +136,18 @@ public class VitalFarma implements Serializable {
                 exibirPedido(cliente);
                 cliente.realizarCompra();
                 break;
+			case CANCELAR_COMPRA:
+				limparConsole();
+				exibirLogoDaFarmacia();
+                System.out.println("[*] - Compra cancelada com sucesso");
+                break;
+			case SAIR:
+				System.exit(0);
             default:
             	System.out.println("[!] - Opcao invalida");
             	break;
 			}
-			
-		} while(opcao != SAIR);
+		} while(opcao != SAIR && opcao != CANCELAR_COMPRA);
 	}
 
 	private void adicionarProdutoAoPedido(Cliente cliente) {

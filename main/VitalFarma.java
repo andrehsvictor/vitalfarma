@@ -76,7 +76,6 @@ public class VitalFarma implements Serializable {
 			Cliente cliente = new Cliente(nome, idade);
 			addCliente(cliente);
 		}
-		salvarClientes();
 	}
 
 	public Cliente procurarClientePorNome(String nome) {
@@ -263,15 +262,33 @@ public class VitalFarma implements Serializable {
 	}
 
 	public void exibirPedido(Cliente cliente) {
-	    System.out.println("---------- PEDIDO VITALFARMA ----------");
-	    System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
-	    System.out.println("Produtos:");
+		/*
+		 * System.out.println("---------- PEDIDO VITALFARMA ----------");
+		 * System.out.println("Data e Hora do Pedido: " +
+		 * cliente.dataDoPedidoToString()); System.out.println("Produtos:"); for
+		 * (Produto produto : cliente.getPedido().getProdutos()) {
+		 * produto.exibirDescricao(); } System.out.println("Valor Total: " +
+		 * cliente.calcularValorTotal()); System.out.println("Cliente: " +
+		 * cliente.getNome());
+		 * System.out.println("---------------------------------------\n\n");
+		 */
+		
+		System.out.println("╔══════════════════════════════════════════╗");
+	    System.out.println("║             PEDIDO VITALFARMA            ║");
+	    System.out.println("╠══════════════════════════════════════════╣");
+	    System.out.printf("║ Data e Hora do Pedido: %-18s║%n", cliente.dataDoPedidoToString());
+	    System.out.println("╠══════════════════════════════════════════╣");
+	    System.out.println("║                 PRODUTOS                 ║");
+	    System.out.println("╠══════════════════════════════════════════╣");
 	    for (Produto produto : cliente.getPedido().getProdutos()) {
-	        produto.exibirDescricao();
+	    	System.out.printf("║ %s R$ %-32.2f║%n", produto.getNome(), produto.getPreco());
 	    }
-	    System.out.println("Valor Total: " + cliente.calcularValorTotal());
-	    System.out.println("Cliente: " + cliente.getNome());
-	    System.out.println("---------------------------------------\n\n");
+	    System.out.println("╠══════════════════════════════════════════╣");
+	    System.out.printf("║ Valor Total: %-27s ║%n", cliente.calcularValorTotal());
+	    System.out.println("╠══════════════════════════════════════════╣");
+	    System.out.printf("║ Cliente: %-31s ║%n", cliente.getNome());
+	    System.out.println("╚══════════════════════════════════════════╝");
+	    System.out.println("\n\n");
 	}
 
 	public void exibirOpcoesCompras() {
@@ -297,7 +314,7 @@ public class VitalFarma implements Serializable {
 	}
 
 	public void exibirProdutosDoEstoque() {
-		getEstoque().imprimirTabela();
+		getEstoque().exibirProdutos();
 	}
 
 	public void exibirMensagemDeErro(String mensagem) {
@@ -312,6 +329,21 @@ public class VitalFarma implements Serializable {
 		System.out.println("    \\_/  |_|\\__\\__,_|_|_|  \\__,_|_|  |_| |_| |_|\\__,_|");
 
 	
+	}
+
+	public void exibirListaDeClientes() {
+		System.out.println("╭──────────────────────────────────────────────╮");
+	    System.out.println("│                   CLIENTES                   │");
+	    System.out.println("├──────────────────────┬────────┬──────────────┤");
+	    System.out.println("│        Nome          │ Idade  │ Qtd. Compras │");
+	    System.out.println("├──────────────────────┼────────┼──────────────┤");
+	
+	    for (Cliente cliente : clientes) {
+	
+	        System.out.printf("│ %-20s │ " + "%-6s │ " + "%-12s │\n",cliente.getNome(), cliente.getIdade(), cliente.getCartaoDeFidelidade().getQtdCompras());
+	    }
+	
+	    System.out.println("╰──────────────────────┴────────┴──────────────╯");
 	}
 
 	public void limparConsole() {
@@ -330,20 +362,5 @@ public class VitalFarma implements Serializable {
         System.out.print(label);
         int integer = scanner.nextInt();
         return integer;
-    }
-	
-	public void exibirListaDeClientes() {
-		System.out.println("╭──────────────────────────────────────────────╮");
-        System.out.println("│                   CLIENTES                   │");
-        System.out.println("├──────────────────────┬────────┬──────────────┤");
-        System.out.println("│        Nome          │ Idade  │ Qtd. Compras │");
-        System.out.println("├──────────────────────┼────────┼──────────────┤");
-
-        for (Cliente cliente : clientes) {
-
-            System.out.printf("│ %-20s │ " + "%-6s │ " + "%-12s │\n",cliente.getNome(), cliente.getIdade(), cliente.getCartaoDeFidelidade().getQtdCompras());
-        }
-
-        System.out.println("╰──────────────────────┴────────┴──────────────╯");
     }
 }

@@ -62,26 +62,10 @@ public class Estoque {
 		
 		return null;
 	}
-
-	public void exibirProdutos() {
-		String labelSuplementos = "---------------- Suplementos";
-		String labelCosmeticos = "----------------- Cosmeticos";
-		String labelRemedios = "------------------- Remedios";
-		
-		System.out.println(labelCosmeticos);
-		for (Cosmetico cosmetico : cosmeticos)
-			cosmetico.exibirDescricao();
-		System.out.println(labelSuplementos);
-        for (Suplemento suplemento : suplementos)
-        	suplemento.exibirDescricao();
-        System.out.println(labelRemedios);
-        for (Remedio remedio : remedios)
-        	remedio.exibirDescricao();
-	}
 	
-	public void imprimirTabela() {
+	public void exibirProdutos() {
         System.out.println("----------------------------------------------------------------------------------------------------");
-        System.out.println("|   Remedios    |   Preco (R$)   |  Suplementos  |   Preco (R$)  |   Cosmeticos   |   Preco (R$)   |");
+        System.out.println("|   Remédios    |   Preço (R$)   |  Suplementos  |   Preço (R$)  |   Cosméticos   |   Preço (R$)   |");
         System.out.println("----------------------------------------------------------------------------------------------------");
 
         int maxRows = Math.max(Math.max(remedios.size(), suplementos.size()), cosmeticos.size());

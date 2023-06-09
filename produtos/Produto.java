@@ -47,7 +47,4 @@ public abstract class Produto implements Serializable {
         }
     }
     
-    public void exibirDescricao() {
-    	System.out.printf("%-20s R$%.2f%n", nome, preco);
-    }
 }

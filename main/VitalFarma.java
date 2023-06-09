@@ -36,7 +36,7 @@ public class VitalFarma implements Serializable {
 
 	public void iniciar(){
 		exibirLogoDaFarmacia();
-		iniciarMenuDeOperacoes();
+		iniciarOperacoes();
 	}
 
     public List<Cliente> getClientes() {
@@ -76,6 +76,7 @@ public class VitalFarma implements Serializable {
 			Cliente cliente = new Cliente(nome, idade);
 			addCliente(cliente);
 		}
+		salvarClientes();
 	}
 
 	public Cliente procurarClientePorNome(String nome) {
@@ -127,7 +128,7 @@ public class VitalFarma implements Serializable {
 		} while(opcao != SAIR && opcao != CANCELAR_COMPRA);
 	}
 
-	public void iniciarMenuDeOperacoes() {
+	public void iniciarOperacoes() {
 		exibirOperacoes();
 		int opcao = intInput("-> Digite uma opcao: ");
 		final int COMPRAR = 1;
@@ -142,6 +143,11 @@ public class VitalFarma implements Serializable {
 				iniciarCompras();
 				break;
 			case EXIBIR_CLIENTES:
+				limparConsole();
+                exibirListaDeClientes();
+                stringInput("Digite qualquer coisa para voltar: ");
+                limparConsole();
+    			exibirLogoDaFarmacia();
 				break;
 			case INFO:
 				break;
@@ -156,10 +162,15 @@ public class VitalFarma implements Serializable {
 			}
 			exibirOperacoes();
 			opcao = intInput("Digite uma opcao: ");
-		} while(opcao != 4);
+		} while(opcao != SAIR);
 	}
 
 	public void sair() {
+		salvarClientes();
+		System.exit(0);
+	}
+
+	public void salvarClientes() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("VitalFarma.obj"));
 			oos.writeObject(this.clientes);
@@ -169,7 +180,6 @@ public class VitalFarma implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.exit(0);
 	}
 
     public void adicionarProdutoAoPedido(Cliente cliente) {
@@ -261,30 +271,33 @@ public class VitalFarma implements Serializable {
 	    }
 	    System.out.println("Valor Total: " + cliente.calcularValorTotal());
 	    System.out.println("Cliente: " + cliente.getNome());
-	    System.out.println("---------------------------------------");
+	    System.out.println("---------------------------------------\n\n");
 	}
 
 	public void exibirOpcoesCompras() {
-		String opcoes = "---------------- OPCOES ---------------\n" +
-		"1 - Comprar mais\n" +
-		"2 - Terminar pedido\n" +
-		"3 - Cancelar compra\n" +
-		"4 - Sair\n" +
-		"---------------------------------------";
-		System.out.println(opcoes);
+		System.out.println("╭──────────────────────╮");
+        System.out.println("│         MENU         │");
+        System.out.println("├──────────────────────┤");
+        System.out.println("│ 1. Comprar mais      │");
+        System.out.println("│ 2. Terminar pedido   │");
+        System.out.println("│ 3. Cancelar compra   │");
+        System.out.println("│ 4. Sair              │");
+        System.out.println("╰──────────────────────╯");
 	}
 
 	public void exibirOperacoes() {
-		System.out.println("----------------- MENU ----------------");
-	    System.out.println("1 - Comprar");
-	    System.out.println("2 - Exibir Clientes");
-	    System.out.println("3 - Info");
-	    System.out.println("4 - Sair");
-	    System.out.println("---------------------------------------");
+		System.out.println("╭──────────────────────╮");
+        System.out.println("│         MENU         │");
+        System.out.println("├──────────────────────┤");
+        System.out.println("│ 1. Comprar           │");
+        System.out.println("│ 2. Exibir Clientes   │");
+        System.out.println("│ 3. Informações       │");
+        System.out.println("│ 4. Sair              │");
+        System.out.println("╰──────────────────────╯");
 	}
 
 	public void exibirProdutosDoEstoque() {
-		getEstoque().exibirProdutos();
+		getEstoque().imprimirTabela();
 	}
 
 	public void exibirMensagemDeErro(String mensagem) {
@@ -292,21 +305,17 @@ public class VitalFarma implements Serializable {
 	}
 
 	public void exibirLogoDaFarmacia() {
-	    String logo =
-	            "                                                                                       \n" +
-	                    ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
-	                    " \\  `.'  / `--',-'  '-. ,--,--.|  ||  .---',--,--.,--.--.,--,--,--. ,--,--. \n" +
-	                    "  \\     /  ,--.'-.  .-'' ,-.  ||  ||  `--,' ,-.  ||  .--'|        |' ,-.  | \n" +
-	                    "   \\   /   |  |  |  |  \\ '-'  ||  ||  |`  \\ '-'  ||  |   |  |  |  |\\ '-'  | \n" +
-	                    "    `-'    `--'  `--'   `--`--'`--'`--'    `--`--'`--'   `--`--`--' `--`--' \n" +
-	                    "                                                                           \n";
-	
-	    System.out.println(logo);
+		System.out.println(" __     ___ _        _ _____                          ");
+		System.out.println(" \\ \\   / (_) |_ __ _| |  ___|_ _ _ __ _ __ ___   __ _ ");
+		System.out.println("  \\ \\ / /| | __/ _` | | |_ / _` | '__| '_ ` _ \\ / _` |");
+		System.out.println("   \\ V / | | || (_| | |  _| (_| | |  | | | | | | (_| |");
+		System.out.println("    \\_/  |_|\\__\\__,_|_|_|  \\__,_|_|  |_| |_| |_|\\__,_|");
+
 	
 	}
 
 	public void limparConsole() {
-    	for(int i = 0; i < 100; i++) System.out.println();
+		for(int i = 0; i < 100; i++) System.out.println();
     }
 
 	public String stringInput(String label) {
@@ -321,5 +330,20 @@ public class VitalFarma implements Serializable {
         System.out.print(label);
         int integer = scanner.nextInt();
         return integer;
+    }
+	
+	public void exibirListaDeClientes() {
+		System.out.println("╭──────────────────────────────────────────────╮");
+        System.out.println("│                   CLIENTES                   │");
+        System.out.println("├──────────────────────┬────────┬──────────────┤");
+        System.out.println("│        Nome          │ Idade  │ Qtd. Compras │");
+        System.out.println("├──────────────────────┼────────┼──────────────┤");
+
+        for (Cliente cliente : clientes) {
+
+            System.out.printf("│ %-20s │ " + "%-6s │ " + "%-12s │\n",cliente.getNome(), cliente.getIdade(), cliente.getCartaoDeFidelidade().getQtdCompras());
+        }
+
+        System.out.println("╰──────────────────────┴────────┴──────────────╯");
     }
 }

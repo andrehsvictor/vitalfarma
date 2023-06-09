@@ -79,4 +79,28 @@ public class Estoque {
         	remedio.exibirDescricao();
 	}
 	
+	public void imprimirTabela() {
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        System.out.println("|   Remedios    |   Preco (R$)   |  Suplementos  |   Preco (R$)  |   Cosmeticos   |   Preco (R$)   |");
+        System.out.println("----------------------------------------------------------------------------------------------------");
+
+        int maxRows = Math.max(Math.max(remedios.size(), suplementos.size()), cosmeticos.size());
+
+        for (int i = 0; i < maxRows; i++) {
+            String nomeRemedio = i < remedios.size() ? remedios.get(i).getNome() : "";
+            double precoRemedio = i < remedios.size() ? remedios.get(i).getPreco() : 0.0;
+
+            String nomeSuplemento = i < suplementos.size() ? suplementos.get(i).getNome() : "";
+            double precoSuplemento = i < suplementos.size() ? suplementos.get(i).getPreco() : 0.0;
+
+            String nomeCosmetico = i < cosmeticos.size() ? cosmeticos.get(i).getNome() : "";
+            double precoCosmetico = i < cosmeticos.size() ? cosmeticos.get(i).getPreco() : 0.0;
+
+            System.out.printf("| %-14s| %-15.2f| %-14s| %-14.2f| %-15s| %-15.2f|%n",
+                    nomeRemedio, precoRemedio, nomeSuplemento, precoSuplemento, nomeCosmetico, precoCosmetico);
+        }
+
+        System.out.println("----------------------------------------------------------------------------------------------------");
+    }
+	
 }

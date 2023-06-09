@@ -13,7 +13,12 @@ public class Fachada {
     }
 
     public void iniciar() {
-    	try {
+    	carregarDados();
+        vitalFarma.iniciar();
+    }
+
+	private void carregarDados() {
+		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("VitalFarma.obj"));
 			try {
 				vitalFarma.setClientes((List<Cliente>) ois.readObject());
@@ -26,6 +31,5 @@ public class Fachada {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        vitalFarma.iniciar();
-    }
+	}
 }

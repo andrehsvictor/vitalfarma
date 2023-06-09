@@ -156,18 +156,54 @@ public class VitalFarma implements Serializable {
 		} while(opcao != 4);
 	}
 
-	public void adicionarProdutoAoPedido(Cliente cliente) {
-		String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ")
-				.toUpperCase();
-		Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
-		limparConsole();
-		if(produto != null) {
-			cliente.getPedido().addProduto(produto);
-			System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
-		} else {
-			exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
-		}
-	}
+    private void adicionarProdutoAoPedido(Cliente cliente) {
+        String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ").toUpperCase();
+        Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
+        boolean produtoDesejadoExisteNoEstoque = produto != null;
+
+        limparConsole();
+
+        if (produtoDesejadoExisteNoEstoque) {
+            if (produto instanceof Remedio) {
+                adicionarRemedioAoPedido(cliente, produto, nomeDoProdutoDesejado);
+            } else {
+                cliente.getPedido().addProduto(produto);
+                System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+            }
+        } else {
+            System.out.println("[!] - Produto " + nomeDoProdutoDesejado + " não existe no estoque");
+        }
+    }
+    private void adicionarRemedioAoPedido(Cliente cliente, Produto produto, String nomeDoProdutoDesejado) {
+        Remedio remedio = (Remedio) produto;
+
+        if (remedio.isSujeitoAPrescricao(nomeDoProdutoDesejado)) {
+            if (temReceita(nomeDoProdutoDesejado)) {
+                cliente.getPedido().addProduto(produto);
+                System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+            } else {
+                System.out.println("[!] - Este produto exige prescrição médica.");
+                System.out.println("[!] - Você precisa apresentar a receita médica para poder comprá-lo.");
+            }
+        } else {
+            cliente.getPedido().addProduto(produto);
+            System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+        }
+    }
+
+    public boolean temReceita(String nomeMedicamento) {
+        if (nomeMedicamento.equals("RIVOTRIL")) {
+            String codigoCorreto = stringInput("Digite o código da receita médica para Rivotril: ");
+            return codigoCorreto.equals("201324");
+        } else if (nomeMedicamento.equals("LOSARTANA")) {
+            String codigoCorreto = stringInput("Digite o código da receita médica para Losartana: ");
+            return codigoCorreto.equals("890213");
+        } else if (nomeMedicamento.equals("NEOSORO")) {
+            String codigoCorreto = stringInput("Digite o código da receita médica para Neosoro: ");
+            return codigoCorreto.equals("562739");
+        }
+        return true;
+    }
 
 	public Produto procurarProdutoNoEstoque(String nomeDoProduto) {
 		return getEstoque().procurarProdutoPorNome(nomeDoProduto);

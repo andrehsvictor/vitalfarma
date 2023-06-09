@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Produto {
-    private String nome;
+public abstract class Produto implements Serializable {
+	private static final long serialVersionUID = -8645940271645643698L;
+	private String nome;
     private double preco;
     private static Map<String, Double> mapaDePrecos = new HashMap<String, Double>();
     

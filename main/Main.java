@@ -2,8 +2,7 @@
 public class Main {
 
 	public static void main(String[] args) {
-		VitalFarma vf = new VitalFarma();
-		vf.iniciar();
+		Fachada fachada = new Fachada();
+		fachada.iniciar();
 	}
-
 }

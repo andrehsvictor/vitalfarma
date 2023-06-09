@@ -115,11 +115,12 @@ public class VitalFarma implements Serializable {
 		exibirProdutosDoEstoque();
 		adicionarProdutoAoPedido(cliente);
 		do {
-			String desejaContinuarLabel = "-------- Opcoes --------\n" +
+			String desejaContinuarLabel = "---------------- OPCOES ---------------\n" +
 			"1 - Comprar mais\n" +
             "2 - Terminar pedido\n" +
             "3 - Cancelar compra\n" +
-            "4 - Sair\n";
+            "4 - Sair\n" +
+            "---------------------------------------";
 			
 			System.out.println(desejaContinuarLabel);
 			opcao = intInput("-> Digite uma opcao: ");
@@ -135,6 +136,7 @@ public class VitalFarma implements Serializable {
                 System.out.println("[*] - Pedido terminado com sucesso");
                 exibirPedido(cliente);
                 cliente.realizarCompra();
+                cliente.getPedido().removeAllProdutos();
                 break;
 			case CANCELAR_COMPRA:
 				limparConsole();
@@ -188,7 +190,7 @@ public class VitalFarma implements Serializable {
 	}
 
 	private void iniciarMenuDeOpcoes() {
-    	exibirOpcoes();
+    	exibirMenu();
 		int opcao = intInput("-> Digite uma opcao: ");
 		final int COMPRAR = 1;
 		final int EXIBIR_CLIENTES = 2;
@@ -209,13 +211,13 @@ public class VitalFarma implements Serializable {
 				System.out.println("[!] - Digite uma opcao valida");
 				break;
 			}
-			exibirOpcoes();
+			exibirMenu();
 			opcao = intInput("Digite uma opcao: ");
 		} while(opcao != 4);
 	}
 
-	private void exibirOpcoes() {
-		System.out.println("------------ MENU DE OPCOES -----------");
+	private void exibirMenu() {
+		System.out.println("----------------- MENU ----------------");
         System.out.println("1 - Comprar");
         System.out.println("2 - Exibir Clientes");
         System.out.println("3 - Info");

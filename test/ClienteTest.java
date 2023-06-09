@@ -9,8 +9,6 @@ import java.util.Map;
 public class ClienteTest {
 
     private Cliente cliente;
-    private CartaoDeFidelidade cartaoDeFidelidade;
-    private Map<String, Double> mapaDePrecos;
 
     @BeforeEach
     public void setUp() {
@@ -18,33 +16,43 @@ public class ClienteTest {
     }
 
 
-    @org.junit.Test
+    @Test
     public void testCalcularValorTotal() {
-        Produto produto1 = new Produto("Produto 1") {
-            @Override
-            public double getPreco() {
-                return 10.0;
-            }
-        };
+        try {
+        	cliente.setIdade(60);
+			Map<String, Double> mapaDePrecos = new HashMap<>();
+			mapaDePrecos.put("PRODUTO 1", 10.0);
+			mapaDePrecos.put("PRODUTO 2", 20.0);
+			Produto.setMapaDePrecos(mapaDePrecos);
+        	
+			Remedio produto1 = new Remedio("Produto 1") {
+			    @Override
+			    public double getPreco() {
+			        return 10.0;
+			    }
+			};
 
-        Produto produto2 = new Produto("Produto 2") {
-            @Override
-            public double getPreco() {
-                return 20.0;
-            }
-        };
+			Suplemento produto2 = new Suplemento("Produto 2") {
+			    @Override
+			    public double getPreco() {
+			        return 20.0;
+			    }
+			};
 
-        cliente.getPedido().addProduto(produto1);
-        cliente.getPedido().addProduto(produto2);
+			cliente.getPedido().addProduto(produto1);
+			cliente.getPedido().addProduto(produto2);
 
-        String valorTotal = cliente.calcularValorTotal();
-        Assertions.assertEquals("R$ 30,00 (Com desconto)", valorTotal);
+			String valorTotal = cliente.calcularValorTotal();
+			Assertions.assertEquals("R$ 15,00 (Com desconto)", valorTotal);
+		} catch (ProdutoInvalidoException e) {
+			Assertions.fail(e.getMessage());
+		}
     }
 
     @Test
     public void testCalcularValorTotalSemDesconto() {
         try {
-            Produto produto = new Produto("COLAGENO") {
+            Suplemento produto = new Suplemento("COLAGENO") {
                 @Override
                 public double getPreco() {
                     return 15.0;

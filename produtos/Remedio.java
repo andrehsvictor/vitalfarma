@@ -25,7 +25,7 @@ public class Remedio extends Produto {
     		super.exibirDescricao();;
     }
 
-	private boolean isSujeitoAPrescricao(String nomeDoRemedio) {
+	public boolean isSujeitoAPrescricao(String nomeDoRemedio) {
 		switch (nomeDoRemedio) {
 		case "RIVOTRIL":
 			return true;

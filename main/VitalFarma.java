@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class VitalFarma {
+public class VitalFarma implements Serializable {
+	private static final long serialVersionUID = 8496667498812511605L;
 	private List<Cliente> clientes = new ArrayList<>();
 	private List<Pedido> pedidos = new ArrayList<>();
 	private Estoque estoque = new Estoque();
@@ -28,10 +30,11 @@ public class VitalFarma {
         estoque.adicionarRemedio("HISTAMIN");
         estoque.adicionarRemedio("LOSARTANA");
 	}
-	
-	public VitalFarma() {
-		start();
-    }
+
+	public void start() {
+		exibirLogoDaFarmacia();
+		iniciarMenuDeOpcoes();
+	}
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -65,11 +68,11 @@ public class VitalFarma {
 	    this.pedidos.add(pedido);
 	}
 
-	public void adicionarCliente(String nome, int idade) {
+	private void cadastrarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
 			Cliente cliente = new Cliente(nome, idade);
 			addCliente(cliente);
-		};
+		}
 	}
 	
 	public void removeCliente(Cliente cliente) {
@@ -80,7 +83,7 @@ public class VitalFarma {
 	    this.pedidos.remove(pedido);
 	}
 
-	public Cliente procurarClientePorNome(String nome) {
+	private Cliente procurarClientePorNome(String nome) {
 		for (Cliente cliente : clientes)
             if (cliente.getNome().equals(nome))
                 return cliente;
@@ -88,33 +91,7 @@ public class VitalFarma {
 		return null;
 	}
 	
-	private void start() {
-		exibirSloganDaFarmacia();
-		getEstoque().exibirProdutos();
-		Scanner sc = new Scanner(System.in);
-		String nomeDoProdutoDesejado = sc.nextLine().toUpperCase();
-		Produto produtoDesejado = getEstoque().procurarProdutoPorNome(nomeDoProdutoDesejado);
-		
-		if(nomeDoProdutoDesejado.equals(produtoDesejado.getNome())) {
-			String nomeCliente = sc.nextLine()
-					.toUpperCase()
-                    .strip();
-			int idadeCliente = sc.nextInt();
-			
-			adicionarCliente(nomeCliente, idadeCliente);
-			
-			Cliente cliente = procurarClientePorNome(nomeCliente);
-			cliente.getPedido().addProduto(produtoDesejado);
-			limparConsole();
-			exibirPedido(cliente);
-			cliente.realizarCompra();
-			
-		}
-		
-		
-	}
-	
-	public void exibirPedido(Cliente cliente) {
+	private void exibirPedido(Cliente cliente) {
         System.out.println("---------- PEDIDO VITALFARMA ----------");
         System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
         System.out.println("Produtos:");
@@ -126,12 +103,153 @@ public class VitalFarma {
         System.out.println("---------------------------------------");
     }
     
-    private void exibirSloganDaFarmacia() {
-		final String SLOGAN = "- V I T A L F A R M A -" + "\n";
-		System.out.println(SLOGAN);
+    private void iniciarCompras() {
+    	int opcao;
+    	final int COMPRAR_MAIS = 1;
+    	final int TERMINAR = 2;
+    	final int CANCELAR_COMPRAR = 3;
+    	final int SAIR = 4;
+    	
+    	limparConsole();
+		Cliente cliente = processarCliente();
+		exibirProdutosDoEstoque();
+		adicionarProdutoAoPedido(cliente);
+		do {
+			String desejaContinuarLabel = "-------- Opcoes --------\n" +
+			"1 - Comprar mais\n" +
+            "2 - Terminar pedido\n" +
+            "3 - Cancelar compra\n" +
+            "4 - Sair\n";
+			
+			System.out.println(desejaContinuarLabel);
+			opcao = intInput("-> Digite uma opcao: ");
+			
+			switch(opcao) {
+			case COMPRAR_MAIS:
+				limparConsole();
+				exibirProdutosDoEstoque();
+                adicionarProdutoAoPedido(cliente);
+                break;
+			case TERMINAR:
+				limparConsole();
+                System.out.println("[*] - Pedido terminado com sucesso");
+                exibirPedido(cliente);
+                cliente.realizarCompra();
+                break;
+            default:
+            	System.out.println("[!] - Opcao invalida");
+            	break;
+			}
+			
+		} while(opcao != SAIR);
+	}
+
+	private void adicionarProdutoAoPedido(Cliente cliente) {
+		String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ")
+				.toUpperCase();
+		Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
+		boolean produtoDesejadoExisteNoEstoque = nomeDoProdutoDesejado.equals(produto.getNome());
+		limparConsole();
+		if(produtoDesejadoExisteNoEstoque) {
+			cliente.getPedido().addProduto(produto);
+			System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+		} else {
+			System.out.println("[!] - Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
+		}
+	}
+
+	private Produto procurarProdutoNoEstoque(String nomeDoProduto) {
+		return getEstoque().procurarProdutoPorNome(nomeDoProduto);
+	}
+
+	private Cliente processarCliente() {
+		String nomeCliente = stringInput("Digite seu nome: ")
+				.toLowerCase();
+		Cliente cliente = procurarClientePorNome(nomeCliente);
+		
+		if(cliente == null) {
+			System.out.println("[!] - Cliente inexistente. Iniciando cadastramento...");
+			int idadeCliente = intInput("Digite a idade do cliente: ");
+			limparConsole();
+			System.out.println("[*] - Cliente cadastrado com sucesso");
+			cadastrarCliente(nomeCliente, idadeCliente);
+		} else {
+			limparConsole();
+			System.out.println("[*] - Bem-vindo de volta, " + cliente.getNome() + "! :)");
+		}
+		
+		return procurarClientePorNome(nomeCliente);
+	}
+
+	private void iniciarMenuDeOpcoes() {
+    	exibirOpcoes();
+		int opcao = intInput("-> Digite uma opcao: ");
+		final int COMPRAR = 1;
+		final int EXIBIR_CLIENTES = 2;
+		final int SAIR = 4;
+		
+		do {
+			switch(opcao) {
+			case COMPRAR:
+				limparConsole();
+				iniciarCompras();
+				break;
+			case EXIBIR_CLIENTES:
+				break;
+			case SAIR:
+				break;
+			default:
+				limparConsole();
+				System.out.println("[!] - Digite uma opcao valida");
+				break;
+			}
+			exibirOpcoes();
+			opcao = intInput("Digite uma opcao: ");
+		} while(opcao != 4);
+	}
+
+	private void exibirOpcoes() {
+		System.out.println("------------ MENU DE OPCOES -----------");
+        System.out.println("1 - Comprar");
+        System.out.println("2 - Exibir Clientes");
+        System.out.println("3 - Info");
+        System.out.println("4 - Sair");
+        System.out.println("---------------------------------------");
+	}
+
+	private void exibirProdutosDoEstoque() {
+		getEstoque().exibirProdutos();
+	}
+
+	private void exibirLogoDaFarmacia() {
+		String logo =
+	            "                                                                                       \n" +
+	            ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
+	            " \\  `.'  / `--',-'  '-. ,--,--.|  ||  .---',--,--.,--.--.,--,--,--. ,--,--. \n" +
+	            "  \\     /  ,--.'-.  .-'' ,-.  ||  ||  `--,' ,-.  ||  .--'|        |' ,-.  | \n" +
+	            "   \\   /   |  |  |  |  \\ '-'  ||  ||  |`  \\ '-'  ||  |   |  |  |  |\\ '-'  | \n" +
+	            "    `-'    `--'  `--'   `--`--'`--'`--'    `--`--'`--'   `--`--`--' `--`--' \n" +
+	            "                                                                           \n";
+
+	        System.out.println(logo);
+
 	}
 
 	private void limparConsole() {
     	for(int i = 0; i < 100; i++) System.out.println();
     }
+
+	private String stringInput(String label) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print(label);
+		String line = scanner.nextLine().strip();
+		return line;
+	}
+
+	private int intInput(String label) {
+		Scanner scanner = new Scanner(System.in);
+	    System.out.print(label);
+	    int integer = scanner.nextInt();
+	    return integer;
+	}
 }

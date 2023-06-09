@@ -44,4 +44,8 @@ public class Pedido {
     public void removeProduto(Produto produto) {
         produtos.remove(produto);
     }
+
+    public void removeAllProdutos() {
+    	produtos.clear();
+    }
 }

@@ -13,7 +13,6 @@ public class VitalFarma implements Serializable {
         estoque.adicionarSuplemento("CREATINA");
         estoque.adicionarSuplemento("PROTEINA");
         estoque.adicionarSuplemento("VITAMINA");
-        estoque.adicionarSuplemento("OMEGA 3");
         estoque.adicionarSuplemento("COLAGENO");
 
         estoque.adicionarCosmetico("CREME PARA PELE");
@@ -31,7 +30,7 @@ public class VitalFarma implements Serializable {
         estoque.adicionarRemedio("LOSARTANA");
     }
 
-	public void iniciar() {
+	public void iniciar(){
 		exibirLogoDaFarmacia();
 		iniciarMenuDeOperacoes();
 	}
@@ -83,7 +82,7 @@ public class VitalFarma implements Serializable {
 		return null;
 	}
 	
-	public void iniciarCompras() {
+	public void iniciarCompras(){
     	int opcao;
     	final int COMPRAR_MAIS = 1;
     	final int TERMINAR = 2;
@@ -156,7 +155,7 @@ public class VitalFarma implements Serializable {
 		} while(opcao != 4);
 	}
 
-    private void adicionarProdutoAoPedido(Cliente cliente) {
+    public void adicionarProdutoAoPedido(Cliente cliente) {
         String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ").toUpperCase();
         Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
         boolean produtoDesejadoExisteNoEstoque = produto != null;
@@ -171,19 +170,20 @@ public class VitalFarma implements Serializable {
                 System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
             }
         } else {
-            System.out.println("[!] - Produto " + nomeDoProdutoDesejado + " não existe no estoque");
+        	exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
         }
     }
-    private void adicionarRemedioAoPedido(Cliente cliente, Produto produto, String nomeDoProdutoDesejado) {
+    public void adicionarRemedioAoPedido(Cliente cliente, Produto produto, String nomeDoProdutoDesejado) {
         Remedio remedio = (Remedio) produto;
 
         if (remedio.isSujeitoAPrescricao(nomeDoProdutoDesejado)) {
             if (temReceita(nomeDoProdutoDesejado)) {
+            	limparConsole();
                 cliente.getPedido().addProduto(produto);
                 System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
             } else {
-                System.out.println("[!] - Este produto exige prescrição médica.");
-                System.out.println("[!] - Você precisa apresentar a receita médica para poder comprá-lo.");
+            	exibirMensagemDeErro("Este produto exige prescricao medica");
+            	exibirMensagemDeErro("Voce precisa apresentar a receita medica para poder compra-lo");
             }
         } else {
             cliente.getPedido().addProduto(produto);
@@ -193,7 +193,7 @@ public class VitalFarma implements Serializable {
 
     public boolean temReceita(String nomeMedicamento) {
         if (nomeMedicamento.equals("RIVOTRIL")) {
-            String codigoCorreto = stringInput("Digite o código da receita médica para Rivotril: ");
+            String codigoCorreto = stringInput("Digite o codigo da receita medica para Rivotril: ");
             return codigoCorreto.equals("201324");
         } else if (nomeMedicamento.equals("LOSARTANA")) {
             String codigoCorreto = stringInput("Digite o código da receita médica para Losartana: ");
@@ -228,6 +228,13 @@ public class VitalFarma implements Serializable {
 		return procurarClientePorNome(nomeCliente);
 	}
 
+	public void terminarPedido(Cliente cliente) {
+		System.out.println("[*] - Pedido terminado com sucesso");
+		exibirPedido(cliente);
+		cliente.realizarCompra();
+		cliente.getPedido().removeAllProdutos();
+	}
+
 	public void exibirPedido(Cliente cliente) {
 	    System.out.println("---------- PEDIDO VITALFARMA ----------");
 	    System.out.println("Data e Hora do Pedido: " + cliente.dataDoPedidoToString());
@@ -240,7 +247,7 @@ public class VitalFarma implements Serializable {
 	    System.out.println("---------------------------------------");
 	}
 
-	private void exibirOpcoesCompras() {
+	public void exibirOpcoesCompras() {
 		String opcoes = "---------------- OPCOES ---------------\n" +
 		"1 - Comprar mais\n" +
 		"2 - Terminar pedido\n" +
@@ -250,31 +257,24 @@ public class VitalFarma implements Serializable {
 		System.out.println(opcoes);
 	}
 
-	private void terminarPedido(Cliente cliente) {
-		System.out.println("[*] - Pedido terminado com sucesso");
-		exibirPedido(cliente);
-		cliente.realizarCompra();
-		cliente.getPedido().removeAllProdutos();
-	}
-
-	private void exibirOperacoes() {
+	public void exibirOperacoes() {
 		System.out.println("----------------- MENU ----------------");
-        System.out.println("1 - Comprar");
-        System.out.println("2 - Exibir Clientes");
-        System.out.println("3 - Info");
-        System.out.println("4 - Sair");
-        System.out.println("---------------------------------------");
+	    System.out.println("1 - Comprar");
+	    System.out.println("2 - Exibir Clientes");
+	    System.out.println("3 - Info");
+	    System.out.println("4 - Sair");
+	    System.out.println("---------------------------------------");
 	}
 
-	private void exibirProdutosDoEstoque() {
+	public void exibirProdutosDoEstoque() {
 		getEstoque().exibirProdutos();
 	}
-	
-	private void exibirMensagemDeErro(String mensagem) {
+
+	public void exibirMensagemDeErro(String mensagem) {
 		System.out.println("[!] - " + mensagem);
 	}
 
-	private void exibirLogoDaFarmacia() {
+	public void exibirLogoDaFarmacia() {
 	    String logo =
 	            "                                                                                       \n" +
 	                    ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
@@ -288,18 +288,18 @@ public class VitalFarma implements Serializable {
 	
 	}
 
-	private void limparConsole() {
+	public void limparConsole() {
     	for(int i = 0; i < 100; i++) System.out.println();
     }
 
-    private String stringInput(String label) {
+	public String stringInput(String label) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(label);
         String line = scanner.nextLine().strip();
         return line;
     }
 
-    private int intInput(String label) {
+	public int intInput(String label) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(label);
         int integer = scanner.nextInt();

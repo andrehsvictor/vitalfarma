@@ -68,13 +68,6 @@ public class VitalFarma implements Serializable {
         this.pedidos.add(pedido);
     }
 
-    private void cadastrarCliente(String nome, int idade) {
-        if(procurarClientePorNome(nome) == null) {
-            Cliente cliente = new Cliente(nome, idade);
-            addCliente(cliente);
-        }
-    }
-
 	public void cadastrarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
 			Cliente cliente = new Cliente(nome, idade);
@@ -246,43 +239,21 @@ public class VitalFarma implements Serializable {
 	}
 
 	private void exibirLogoDaFarmacia() {
-		String logo =
+	    String logo =
 	            "                                                                                       \n" +
-	            ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
-	            " \\  `.'  / `--',-'  '-. ,--,--.|  ||  .---',--,--.,--.--.,--,--,--. ,--,--. \n" +
-	            "  \\     /  ,--.'-.  .-'' ,-.  ||  ||  `--,' ,-.  ||  .--'|        |' ,-.  | \n" +
-	            "   \\   /   |  |  |  |  \\ '-'  ||  ||  |`  \\ '-'  ||  |   |  |  |  |\\ '-'  | \n" +
-	            "    `-'    `--'  `--'   `--`--'`--'`--'    `--`--'`--'   `--`--`--' `--`--' \n" +
-	            "                                                                           \n";
-
-	        System.out.println(logo);
-
+	                    ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
+	                    " \\  `.'  / `--',-'  '-. ,--,--.|  ||  .---',--,--.,--.--.,--,--,--. ,--,--. \n" +
+	                    "  \\     /  ,--.'-.  .-'' ,-.  ||  ||  `--,' ,-.  ||  .--'|        |' ,-.  | \n" +
+	                    "   \\   /   |  |  |  |  \\ '-'  ||  ||  |`  \\ '-'  ||  |   |  |  |  |\\ '-'  | \n" +
+	                    "    `-'    `--'  `--'   `--`--'`--'`--'    `--`--'`--'   `--`--`--' `--`--' \n" +
+	                    "                                                                           \n";
+	
+	    System.out.println(logo);
+	
 	}
 
 	private void limparConsole() {
     	for(int i = 0; i < 100; i++) System.out.println();
-    }
-
-    private void exibirProdutosDoEstoque() {
-        getEstoque().exibirProdutos();
-    }
-
-    private void exibirLogoDaFarmacia() {
-        String logo =
-                "                                                                                       \n" +
-                        ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
-                        " \\  `.'  / `--',-'  '-. ,--,--.|  ||  .---',--,--.,--.--.,--,--,--. ,--,--. \n" +
-                        "  \\     /  ,--.'-.  .-'' ,-.  ||  ||  `--,' ,-.  ||  .--'|        |' ,-.  | \n" +
-                        "   \\   /   |  |  |  |  \\ '-'  ||  ||  |`  \\ '-'  ||  |   |  |  |  |\\ '-'  | \n" +
-                        "    `-'    `--'  `--'   `--`--'`--'`--'    `--`--'`--'   `--`--`--' `--`--' \n" +
-                        "                                                                           \n";
-
-        System.out.println(logo);
-
-    }
-
-    private void limparConsole() {
-        for(int i = 0; i < 100; i++) System.out.println();
     }
 
     private String stringInput(String label) {

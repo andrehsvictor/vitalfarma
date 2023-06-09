@@ -22,6 +22,10 @@ public class Cliente {
 	public int getIdade() {
 	    return idade;
 	}
+	
+	public CartaoDeFidelidade getCartaoDeFidelidade() {
+        return cartaoDeFidelidade;
+    }
 
 	public Pedido getPedido() {
 		return pedido;
@@ -33,6 +37,10 @@ public class Cliente {
 	
 	public void setIdade(int idade) {
         this.idade = idade;
+    }
+	
+	public void setCartaoDeFidelidade(CartaoDeFidelidade cartaoDeFidelidade) {
+        this.cartaoDeFidelidade = cartaoDeFidelidade;
     }
 	
 	public void setPedido(Pedido pedido) {

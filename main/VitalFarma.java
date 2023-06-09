@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -195,6 +196,7 @@ public class VitalFarma implements Serializable {
                 cliente.getPedido().addProduto(produto);
                 System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
             }
+            Collections.sort(cliente.getPedido().getProdutos());
         } else {
         	exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
         }

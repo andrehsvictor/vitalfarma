@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Produto implements Serializable {
+public abstract class Produto implements Serializable, Comparable<Produto> {
 	private static final long serialVersionUID = -8645940271645643698L;
 	private String nome;
     private double preco;
@@ -44,6 +44,17 @@ public abstract class Produto implements Serializable {
             return true;
         } else {
         	throw new ProdutoInvalidoException("Produto invalido: " + nomeDoProdutoFormatado);
+        }
+    }
+    
+    @Override
+    public int compareTo(Produto outroProduto) {
+        if (this.preco < outroProduto.getPreco()) {
+            return -1;
+        } else if (this.preco > outroProduto.getPreco()) {
+            return 1;
+        } else {
+            return 0;
         }
     }
     

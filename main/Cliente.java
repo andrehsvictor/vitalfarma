@@ -64,7 +64,7 @@ public class Cliente {
 		if(cartaoDeFidelidade.getQtdCompras() >= 5)
 			cartaoDeFidelidade.setClienteRecorrente(true);
 		
-		System.out.println("Compra realizada com sucesso");
+		System.out.println("[*] - Compra realizada com sucesso");
 	}
 
 	public String dataDoPedidoToString() {

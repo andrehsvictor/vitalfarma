@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +10,8 @@ import java.util.Scanner;
 public class VitalFarma implements Serializable {
     private static final long serialVersionUID = 8496667498812511605L;
     private List<Cliente> clientes = new ArrayList<>();
-    private List<Pedido> pedidos = new ArrayList<>();
-    private Estoque estoque = new Estoque();
+    private transient List<Pedido> pedidos = new ArrayList<>();
+    private transient Estoque estoque = new Estoque();
 
     {
         estoque.adicionarSuplemento("CREATINA");
@@ -115,7 +119,7 @@ public class VitalFarma implements Serializable {
                 System.out.println("[*] - Compra cancelada com sucesso");
                 break;
 			case SAIR:
-				System.exit(0);
+				sair();
             default:
             	exibirMensagemDeErro("Opcao invalida");
             	break;
@@ -142,7 +146,7 @@ public class VitalFarma implements Serializable {
 			case INFO:
 				break;
 			case SAIR:
-				System.exit(0);
+				sair();
 				break;
 			default:
 				limparConsole();
@@ -153,6 +157,19 @@ public class VitalFarma implements Serializable {
 			exibirOperacoes();
 			opcao = intInput("Digite uma opcao: ");
 		} while(opcao != 4);
+	}
+
+	public void sair() {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("VitalFarma.obj"));
+			oos.writeObject(this.clientes);
+			oos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.exit(0);
 	}
 
     public void adicionarProdutoAoPedido(Cliente cliente) {

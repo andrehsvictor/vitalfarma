@@ -1,9 +1,11 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pedido {
-    private List<Produto> produtos;
+public class Pedido implements Serializable {
+	private static final long serialVersionUID = 3123739041385400202L;
+	private List<Produto> produtos;
     private double valorTotal;
     private LocalDateTime dataHora;
     

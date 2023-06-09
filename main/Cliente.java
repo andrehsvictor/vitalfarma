@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
-public class Cliente {
+public class Cliente implements Serializable {
+	private static final long serialVersionUID = 4333240794964302312L;
 	private String nome;
 	private int idade;
 	private CartaoDeFidelidade cartaoDeFidelidade;

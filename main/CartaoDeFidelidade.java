@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CartaoDeFidelidade {
+public class CartaoDeFidelidade implements Serializable {
+	private static final long serialVersionUID = 3640998671215688011L;
 	private int qtdCompras;
 	private boolean clienteRecorrente;
 	private LocalDate comprasNoMes;
@@ -16,7 +18,7 @@ public class CartaoDeFidelidade {
 	}
 
 	public boolean isClienteRecorrente() {
-		return clienteRecorrente;
+		return (qtdCompras >= 5) ? true : false;
 	}
 
 	public void setQtdCompras(int qtdCompras) {

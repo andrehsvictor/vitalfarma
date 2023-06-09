@@ -4,77 +4,76 @@ import java.util.List;
 import java.util.Scanner;
 
 public class VitalFarma implements Serializable {
-	private static final long serialVersionUID = 8496667498812511605L;
-	private List<Cliente> clientes = new ArrayList<>();
-	private List<Pedido> pedidos = new ArrayList<>();
-	private Estoque estoque = new Estoque();
-	
-	{
-		estoque.adicionarSuplemento("CREATINA");
-		estoque.adicionarSuplemento("PROTEINA");
-		estoque.adicionarSuplemento("VITAMINA");
-		estoque.adicionarSuplemento("OMEGA 3");
-		estoque.adicionarSuplemento("COLAGENO");
-		
-		estoque.adicionarCosmetico("CREME PARA PELE");
-		estoque.adicionarCosmetico("HIDRATANTE");
-		estoque.adicionarCosmetico("PROTETOR SOLAR");
-		estoque.adicionarCosmetico("OLEO DE PELE");
-		
-		estoque.adicionarRemedio("NEOSALDINA");
+    private static final long serialVersionUID = 8496667498812511605L;
+    private List<Cliente> clientes = new ArrayList<>();
+    private List<Pedido> pedidos = new ArrayList<>();
+    private Estoque estoque = new Estoque();
+
+    {
+        estoque.adicionarSuplemento("CREATINA");
+        estoque.adicionarSuplemento("PROTEINA");
+        estoque.adicionarSuplemento("VITAMINA");
+        estoque.adicionarSuplemento("OMEGA 3");
+        estoque.adicionarSuplemento("COLAGENO");
+
+        estoque.adicionarCosmetico("CREME PARA PELE");
+        estoque.adicionarCosmetico("HIDRATANTE");
+        estoque.adicionarCosmetico("PROTETOR SOLAR");
+        estoque.adicionarCosmetico("OLEO DE PELE");
+
+        estoque.adicionarRemedio("NEOSALDINA");
         estoque.adicionarRemedio("ENGOV");
-       	estoque.adicionarRemedio("DORIL");
+        estoque.adicionarRemedio("DORIL");
         estoque.adicionarRemedio("DIPIRONA");
         estoque.adicionarRemedio("RIVOTRIL");
         estoque.adicionarRemedio("NEOSORO");
         estoque.adicionarRemedio("HISTAMIN");
         estoque.adicionarRemedio("LOSARTANA");
-	}
+    }
 
 	public void iniciar() {
 		exibirLogoDaFarmacia();
 		iniciarMenuDeOperacoes();
 	}
 
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
 
-	public List<Pedido> getPedidos() {
-	    return pedidos;
-	}
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
 
-	public Estoque getEstoque() {
-	    return estoque;
-	}
+    public Estoque getEstoque() {
+        return estoque;
+    }
 
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-	
-	public void setPedidos(List<Pedido> pedidos) {
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
-	
-	public void setEstoque(Estoque estoque) {
-	    this.estoque = estoque;
-	}
 
-	public void addCliente(Cliente cliente) {
-	    this.clientes.add(cliente);
-	}
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
+    }
 
-	public void addPedido(Pedido pedido) {
-	    this.pedidos.add(pedido);
-	}
+    public void addCliente(Cliente cliente) {
+        this.clientes.add(cliente);
+    }
 
-	public void removeCliente(Cliente cliente) {
-	    this.clientes.remove(cliente);
-	}
+    public void addPedido(Pedido pedido) {
+        this.pedidos.add(pedido);
+    }
 
-	public void removePedido(Pedido pedido) {
-	    this.pedidos.remove(pedido);
-	}
+    private void cadastrarCliente(String nome, int idade) {
+        if(procurarClientePorNome(nome) == null) {
+            Cliente cliente = new Cliente(nome, idade);
+            addCliente(cliente);
+        }
+    }
 
 	public void cadastrarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
@@ -264,17 +263,39 @@ public class VitalFarma implements Serializable {
     	for(int i = 0; i < 100; i++) System.out.println();
     }
 
-	private String stringInput(String label) {
-		Scanner scanner = new Scanner(System.in);
-		System.out.print(label);
-		String line = scanner.nextLine().strip();
-		return line;
-	}
+    private void exibirProdutosDoEstoque() {
+        getEstoque().exibirProdutos();
+    }
 
-	private int intInput(String label) {
-		Scanner scanner = new Scanner(System.in);
-	    System.out.print(label);
-	    int integer = scanner.nextInt();
-	    return integer;
-	}
+    private void exibirLogoDaFarmacia() {
+        String logo =
+                "                                                                                       \n" +
+                        ",--.   ,--.,--.  ,--.          ,--.,------.                                 \n" +
+                        " \\  `.'  / `--',-'  '-. ,--,--.|  ||  .---',--,--.,--.--.,--,--,--. ,--,--. \n" +
+                        "  \\     /  ,--.'-.  .-'' ,-.  ||  ||  `--,' ,-.  ||  .--'|        |' ,-.  | \n" +
+                        "   \\   /   |  |  |  |  \\ '-'  ||  ||  |`  \\ '-'  ||  |   |  |  |  |\\ '-'  | \n" +
+                        "    `-'    `--'  `--'   `--`--'`--'`--'    `--`--'`--'   `--`--`--' `--`--' \n" +
+                        "                                                                           \n";
+
+        System.out.println(logo);
+
+    }
+
+    private void limparConsole() {
+        for(int i = 0; i < 100; i++) System.out.println();
+    }
+
+    private String stringInput(String label) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(label);
+        String line = scanner.nextLine().strip();
+        return line;
+    }
+
+    private int intInput(String label) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(label);
+        int integer = scanner.nextInt();
+        return integer;
+    }
 }

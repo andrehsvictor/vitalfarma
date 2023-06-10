@@ -1,4 +1,4 @@
-public class Cosmetico extends Produto {
+public class Cosmetico extends Produto implements Serializable {
 
     static {
         getMapaDePrecos().put("CREME PARA PELE", 29.90);

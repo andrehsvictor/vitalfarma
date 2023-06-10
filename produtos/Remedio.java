@@ -1,4 +1,4 @@
-public class Remedio extends Produto {
+public class Remedio extends Produto implements Serializable {
 
     static {
         getMapaDePrecos().put("NEOSALDINA", 22.90);

@@ -14,7 +14,6 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.idade = idade;
 		cartaoDeFidelidade = new CartaoDeFidelidade();
-		pedido = new Pedido();
 	}
 
 	public String getNome() {
@@ -88,6 +87,10 @@ public class Cliente implements Serializable {
         
 		return temDesconto() ? stringValorDescontado : stringValorTotal;
     }
+
+	public void fazerPedido() {
+		pedido = new Pedido();
+	}
 
 	private void incrementarQtdCompras() {
 		cartaoDeFidelidade.setQtdCompras(cartaoDeFidelidade.getQtdCompras() + 1);

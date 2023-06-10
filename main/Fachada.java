@@ -19,13 +19,16 @@ public class Fachada {
 
 	private void carregarDados() {
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("VitalFarma.obj"));
+			ObjectInputStream clientes = new ObjectInputStream(new FileInputStream("dados/clientes.data"));
+			ObjectInputStream pedidos = new ObjectInputStream(new FileInputStream("dados/pedidos.data"));
 			try {
-				vitalFarma.setClientes((List<Cliente>) ois.readObject());
+				vitalFarma.setClientes((List<Cliente>) clientes.readObject());
+				vitalFarma.setPedidos((List<Pedido>) pedidos.readObject());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			ois.close();
+			clientes.close();
+			pedidos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -49,9 +49,9 @@ public abstract class Produto implements Serializable, Comparable<Produto> {
     
     @Override
     public int compareTo(Produto outroProduto) {
-        if (this.preco < outroProduto.getPreco()) {
+        if (this.preco > outroProduto.getPreco()) {
             return -1;
-        } else if (this.preco > outroProduto.getPreco()) {
+        } else if (this.preco < outroProduto.getPreco()) {
             return 1;
         } else {
             return 0;

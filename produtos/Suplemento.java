@@ -1,4 +1,4 @@
-public class Suplemento extends Produto {
+public class Suplemento extends Produto implements Serializable {
 	
 	static {
 		getMapaDePrecos().put("CREATINA", 120.00);

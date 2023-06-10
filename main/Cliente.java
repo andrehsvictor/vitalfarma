@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
-public class Cliente implements Serializable {
+public class Cliente implements Serializable, Comparable<Cliente> {
 	private static final long serialVersionUID = 4333240794964302312L;
 	private String nome;
 	private int idade;
@@ -113,6 +113,16 @@ public class Cliente implements Serializable {
 		double valorDescontado = calcularDesconto(valorTotal);
 		
 		return valorDescontado != valorTotal;
+	}
+
+	@Override
+	public int compareTo(Cliente outro) {
+		if(getCartaoDeFidelidade().getQtdCompras() > outro.getCartaoDeFidelidade().getQtdCompras())
+			return -1;
+        else if(getCartaoDeFidelidade().getQtdCompras() < outro.getCartaoDeFidelidade().getQtdCompras())
+        	return 1;
+        else
+        	return 0;
 	}
     
 }

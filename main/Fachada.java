@@ -19,8 +19,8 @@ public class Fachada {
 
 	private void carregarDados() {
 		try {
-			ObjectInputStream clientes = new ObjectInputStream(new FileInputStream("dados/clientes.data"));
-			ObjectInputStream pedidos = new ObjectInputStream(new FileInputStream("dados/pedidos.data"));
+			ObjectInputStream clientes = new ObjectInputStream(new FileInputStream("dados/clientes.dado"));
+			ObjectInputStream pedidos = new ObjectInputStream(new FileInputStream("dados/pedidos.dado"));
 			try {
 				vitalFarma.setClientes((List<Cliente>) clientes.readObject());
 				vitalFarma.setPedidos((List<Pedido>) pedidos.readObject());

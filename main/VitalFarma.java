@@ -122,11 +122,13 @@ public class VitalFarma implements Serializable {
                 break;
 			case SAIR:
 				sair();
+				break;
             default:
-            	exibirMensagemDeErro("Opcao invalida");
+            	limparConsole();
+            	exibirMensagemDeErro("Opcao inválida!");
             	break;
 			}
-		} while(opcao != SAIR && opcao != CANCELAR_COMPRA);
+		} while(opcao != CANCELAR_COMPRA);
 	}
 
 	public void iniciarOperacoes() {
@@ -177,7 +179,7 @@ public class VitalFarma implements Serializable {
 			}
 			exibirOperacoes();
 			opcao = intInput("Digite uma opcao: ");
-		} while(opcao != SAIR);
+		} while(true);
 	}
 
 	public void exibirListaDePedidos() {
@@ -223,8 +225,9 @@ public class VitalFarma implements Serializable {
 	}
 
 	public void salvarClientes() {
+		Collections.sort(clientes);
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados/clientes.data"));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados/clientes.dado"));
 			oos.writeObject(this.clientes);
 			oos.close();
 		} catch (FileNotFoundException e) {
@@ -236,7 +239,7 @@ public class VitalFarma implements Serializable {
 	
 	public void salvarPedidos() {
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados/pedidos.data"));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados/pedidos.dado"));
 			oos.writeObject(this.pedidos);
 			oos.close();
 		} catch (FileNotFoundException e) {

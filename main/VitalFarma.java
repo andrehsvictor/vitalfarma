@@ -101,7 +101,7 @@ public class VitalFarma implements Serializable {
 	            cliente.getPedido().addProduto(produto);
 	            System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
 	        } else {
-	        	exibirMensagemDeErro("Este produto exige prescricao medica");
+	        	exibirMensagemDeErro("Este produto exige presçrição médica");
 	        	exibirMensagemDeErro("Voce precisa apresentar a receita medica para poder compra-lo");
 	        }
 	    } else {
@@ -117,14 +117,6 @@ public class VitalFarma implements Serializable {
 		}
 	}
 
-	public Cliente procurarClientePorNome(String nome) {
-		for (Cliente cliente : clientes)
-            if (cliente.getNome().equals(nome))
-                return cliente;
-		
-		return null;
-	}
-	
 	public void iniciarCompras(){
     	int opcao;
     	final int COMPRAR_MAIS = 1;
@@ -141,11 +133,12 @@ public class VitalFarma implements Serializable {
 		
 		do {
 			exibirOpcoesCompras();
-			opcao = intInput("-> Digite uma opcao: ");
+			opcao = intInput("-> Digite uma opção: ");
 			
 			switch(opcao) {
 			case COMPRAR_MAIS:
 				limparConsole();
+				cliente.fazerPedido();
 				exibirProdutosDoEstoque();
                 adicionarProdutoAoPedido(cliente);
                 break;
@@ -171,7 +164,7 @@ public class VitalFarma implements Serializable {
 
 	public void iniciarOperacoes() {
 		exibirOperacoes();
-		int opcao = intInput("-> Digite uma opcao: ");
+		int opcao = intInput("-> Digite uma opção: ");
 		final int COMPRAR = 1;
 		final int EXIBIR_CLIENTES = 2;
 		final int EXIBIR_PEDIDOS = 3;
@@ -297,6 +290,14 @@ public class VitalFarma implements Serializable {
 		}
 		
 		return procurarClientePorNome(nomeCliente);
+	}
+
+	public Cliente procurarClientePorNome(String nome) {
+		for (Cliente cliente : clientes)
+	        if (cliente.getNome().equals(nome))
+	            return cliente;
+		
+		return null;
 	}
 
 	public void exibirListaDePedidos() {

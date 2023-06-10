@@ -18,7 +18,8 @@ public class CartaoDeFidelidade implements Serializable {
 	}
 
 	public boolean isClienteRecorrente() {
-		return (qtdCompras >= 5) ? true : false;
+		clienteRecorrente = (qtdCompras >= 5) ? true : false;
+		return clienteRecorrente;
 	}
 
 	public void setQtdCompras(int qtdCompras) {

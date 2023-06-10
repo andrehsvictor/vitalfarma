@@ -138,13 +138,13 @@ public class VitalFarma implements Serializable {
 			switch(opcao) {
 			case COMPRAR_MAIS:
 				limparConsole();
-				cliente.fazerPedido();
 				exibirProdutosDoEstoque();
                 adicionarProdutoAoPedido(cliente);
                 break;
 			case TERMINAR:
 				limparConsole();
                 terminarPedido(cliente);
+                cliente.fazerPedido();
                 break;
 			case CANCELAR_COMPRA:
 				limparConsole();

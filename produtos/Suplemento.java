@@ -1,5 +1,9 @@
+import java.io.Serializable;
+
 public class Suplemento extends Produto implements Serializable {
 	
+	private static final long serialVersionUID = 5827860263407353902L;
+
 	static {
 		getMapaDePrecos().put("CREATINA", 120.00);
 		getMapaDePrecos().put("PROTEINA", 95.90);

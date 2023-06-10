@@ -1,6 +1,9 @@
-public class Remedio extends Produto implements Serializable {
+import java.io.Serializable;
 
-    static {
+public class Remedio extends Produto implements Serializable {
+	private static final long serialVersionUID = 6253965513673136690L;
+
+	static {
         getMapaDePrecos().put("NEOSALDINA", 22.90);
         getMapaDePrecos().put("ENGOV", 19.75);
         getMapaDePrecos().put("DORIL", 39.90);

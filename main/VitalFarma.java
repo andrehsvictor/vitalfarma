@@ -198,7 +198,7 @@ public class VitalFarma implements Serializable {
             }
             Collections.sort(cliente.getPedido().getProdutos());
         } else {
-        	exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " nao existe no estoque");
+        	exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " não existe no estoque");
         }
     }
     public void adicionarRemedioAoPedido(Cliente cliente, Produto produto, String nomeDoProdutoDesejado) {
@@ -283,7 +283,7 @@ public class VitalFarma implements Serializable {
 	    System.out.println("║                 PRODUTOS                 ║");
 	    System.out.println("╠══════════════════════════════════════════╣");
 	    for (Produto produto : cliente.getPedido().getProdutos()) {
-	    	System.out.printf("║ %s R$ %-32.2f║%n", produto.getNome(), produto.getPreco());
+	    	System.out.printf("║ %19s R$ %-18.2f║%n", produto.getNome(), produto.getPreco());
 	    }
 	    System.out.println("╠══════════════════════════════════════════╣");
 	    System.out.printf("║ Valor Total: %-27s ║%n", cliente.calcularValorTotal());

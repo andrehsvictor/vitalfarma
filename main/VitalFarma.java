@@ -306,7 +306,7 @@ public class VitalFarma implements Serializable {
 	    System.out.println("│                                                    │");
 	    System.out.println("│ Produtos:                                          │");
 	    for (Produto produto : pedido.getProdutos()) {
-	        System.out.printf("│   • %s R$%-36.2f│%n",produto.getNome(), produto.getPreco());
+	        System.out.printf("│   • %-47s│%n",produto.getNome() + " R$" + produto.getPreco());
 	    }
 	    System.out.println("│                                                    │");
 	    System.out.printf("│ Valor Total: R$%-36s│%n",String.format("%.2f", pedido.getValorTotal()));

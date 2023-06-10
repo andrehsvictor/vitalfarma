@@ -45,8 +45,8 @@ public class VitalFarma implements Serializable {
     }
 
     public List<Pedido> getPedidos() {
-        return pedidos;
-    }
+	    return pedidos;
+	}
 
     public Estoque getEstoque() {
         return estoque;
@@ -71,6 +71,44 @@ public class VitalFarma implements Serializable {
     public void addPedido(Pedido pedido) {
         this.pedidos.add(pedido);
     }
+
+	public void adicionarProdutoAoPedido(Cliente cliente) {
+	    String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ").toUpperCase();
+	    Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
+	    boolean produtoDesejadoExisteNoEstoque = produto != null;
+	
+	    limparConsole();
+	
+	    if (produtoDesejadoExisteNoEstoque) {
+	        if (produto instanceof Remedio) {
+	            adicionarRemedioAoPedido(cliente, produto, nomeDoProdutoDesejado);
+	        } else {
+	            cliente.getPedido().addProduto(produto);
+	            System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+	        }
+	        Collections.sort(cliente.getPedido().getProdutos());
+	    } else {
+	    	exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " não existe no estoque");
+	    }
+	}
+
+	public void adicionarRemedioAoPedido(Cliente cliente, Produto produto, String nomeDoProdutoDesejado) {
+	    Remedio remedio = (Remedio) produto;
+	
+	    if (remedio.isSujeitoAPrescricao(nomeDoProdutoDesejado)) {
+	        if (temReceita(nomeDoProdutoDesejado)) {
+	        	limparConsole();
+	            cliente.getPedido().addProduto(produto);
+	            System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+	        } else {
+	        	exibirMensagemDeErro("Este produto exige prescricao medica");
+	        	exibirMensagemDeErro("Voce precisa apresentar a receita medica para poder compra-lo");
+	        }
+	    } else {
+	        cliente.getPedido().addProduto(produto);
+	        System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
+	    }
+	}
 
 	public void cadastrarCliente(String nome, int idade) {
 		if(procurarClientePorNome(nome) == null) {
@@ -182,38 +220,6 @@ public class VitalFarma implements Serializable {
 		} while(true);
 	}
 
-	public void exibirListaDePedidos() {
-		for(Pedido pedido : pedidos) {
-		System.out.println("╭────────────────────── Pedido ──────────────────────╮");
-        System.out.printf("│ Data e Hora: %-37s │%n", pedido.getDataHora());
-        System.out.println("│                                                    │");
-        System.out.println("│ Produtos:                                          │");
-        for (Produto produto : pedido.getProdutos()) {
-            System.out.printf("│   • %s R$%-36.2f│%n",produto.getNome(), produto.getPreco());
-        }
-        System.out.println("│                                                    │");
-        System.out.printf("│ Valor Total: R$%-36s│%n",String.format("%.2f", pedido.getValorTotal()));
-        System.out.println("╰────────────────────────────────────────────────────╯");
-		}
-	}
-
-	public void exibirInfo() {
-		System.out.println("╭────────────────────────────────────────────────────╮");
-        System.out.println("│                                                    │");
-        System.out.println("│    Programa feito para o projeto final da          │");
-        System.out.println("│    disciplina de Linguagem de Programação,         │");
-        System.out.println("│    lecionada  pela  profª  Raquel Pereira          │");
-        System.out.println("│                                                    │");
-        System.out.println("│    Integrantes do grupo:                           │");
-        System.out.println("│    - André Henrique                                │");
-        System.out.println("│    - Cleber Marcolino                              │");
-        System.out.println("│    - Suerdo Flaubert                               │");
-        System.out.println("│    - Maria Victória                                │");
-        System.out.println("│                                                    │");
-        System.out.println("╰────────────────────────────────────────────────────╯");
-        
-	}
-
 	public void sair() {
 		salvarDados();
 		System.exit(0);
@@ -224,7 +230,7 @@ public class VitalFarma implements Serializable {
 		salvarPedidos();
 	}
 
-	public void salvarClientes() {
+	private void salvarClientes() {
 		Collections.sort(clientes);
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados/clientes.dado"));
@@ -237,7 +243,7 @@ public class VitalFarma implements Serializable {
 		}
 	}
 	
-	public void salvarPedidos() {
+	private void salvarPedidos() {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("dados/pedidos.dado"));
 			oos.writeObject(this.pedidos);
@@ -249,44 +255,7 @@ public class VitalFarma implements Serializable {
 		}
 	}
 
-    public void adicionarProdutoAoPedido(Cliente cliente) {
-        String nomeDoProdutoDesejado = stringInput("-> Digite o nome do produto: ").toUpperCase();
-        Produto produto = procurarProdutoNoEstoque(nomeDoProdutoDesejado);
-        boolean produtoDesejadoExisteNoEstoque = produto != null;
-
-        limparConsole();
-
-        if (produtoDesejadoExisteNoEstoque) {
-            if (produto instanceof Remedio) {
-                adicionarRemedioAoPedido(cliente, produto, nomeDoProdutoDesejado);
-            } else {
-                cliente.getPedido().addProduto(produto);
-                System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
-            }
-            Collections.sort(cliente.getPedido().getProdutos());
-        } else {
-        	exibirMensagemDeErro("Produto " + nomeDoProdutoDesejado + " não existe no estoque");
-        }
-    }
-    public void adicionarRemedioAoPedido(Cliente cliente, Produto produto, String nomeDoProdutoDesejado) {
-        Remedio remedio = (Remedio) produto;
-
-        if (remedio.isSujeitoAPrescricao(nomeDoProdutoDesejado)) {
-            if (temReceita(nomeDoProdutoDesejado)) {
-            	limparConsole();
-                cliente.getPedido().addProduto(produto);
-                System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
-            } else {
-            	exibirMensagemDeErro("Este produto exige prescricao medica");
-            	exibirMensagemDeErro("Voce precisa apresentar a receita medica para poder compra-lo");
-            }
-        } else {
-            cliente.getPedido().addProduto(produto);
-            System.out.println("[*] - Produto " + produto.getNome() + " adicionado ao pedido");
-        }
-    }
-
-    public boolean temReceita(String nomeMedicamento) {
+    private boolean temReceita(String nomeMedicamento) {
         if (nomeMedicamento.equals("RIVOTRIL")) {
             String codigoCorreto = stringInput("Digite o codigo da receita medica para Rivotril: ");
             return codigoCorreto.equals("201324");
@@ -299,6 +268,13 @@ public class VitalFarma implements Serializable {
         }
         return true;
     }
+
+	public void terminarPedido(Cliente cliente) {
+		System.out.println("[*] - Pedido terminado com sucesso");
+		exibirPedido(cliente);
+		cliente.realizarCompra();
+		addPedido(cliente.getPedido());
+	}
 
 	public Produto procurarProdutoNoEstoque(String nomeDoProduto) {
 		return getEstoque().procurarProdutoPorNome(nomeDoProduto);
@@ -323,11 +299,19 @@ public class VitalFarma implements Serializable {
 		return procurarClientePorNome(nomeCliente);
 	}
 
-	public void terminarPedido(Cliente cliente) {
-		System.out.println("[*] - Pedido terminado com sucesso");
-		exibirPedido(cliente);
-		cliente.realizarCompra();
-		addPedido(cliente.getPedido());
+	public void exibirListaDePedidos() {
+		for(Pedido pedido : pedidos) {
+		System.out.println("╭────────────────────── Pedido ──────────────────────╮");
+	    System.out.printf("│ Data e Hora: %-37s │%n", pedido.getDataHora());
+	    System.out.println("│                                                    │");
+	    System.out.println("│ Produtos:                                          │");
+	    for (Produto produto : pedido.getProdutos()) {
+	        System.out.printf("│   • %s R$%-36.2f│%n",produto.getNome(), produto.getPreco());
+	    }
+	    System.out.println("│                                                    │");
+	    System.out.printf("│ Valor Total: R$%-36s│%n",String.format("%.2f", pedido.getValorTotal()));
+	    System.out.println("╰────────────────────────────────────────────────────╯");
+		}
 	}
 
 	public void exibirPedido(Cliente cliente) {
@@ -351,25 +335,42 @@ public class VitalFarma implements Serializable {
 
 	public void exibirOpcoesCompras() {
 		System.out.println("╭──────────────────────╮");
-        System.out.println("│         MENU         │");
-        System.out.println("├──────────────────────┤");
-        System.out.println("│ 1. Comprar mais      │");
-        System.out.println("│ 2. Terminar pedido   │");
-        System.out.println("│ 3. Cancelar compra   │");
-        System.out.println("│ 4. Sair              │");
-        System.out.println("╰──────────────────────╯");
+	    System.out.println("│         MENU         │");
+	    System.out.println("├──────────────────────┤");
+	    System.out.println("│ 1. Comprar mais      │");
+	    System.out.println("│ 2. Terminar pedido   │");
+	    System.out.println("│ 3. Cancelar compra   │");
+	    System.out.println("│ 4. Sair              │");
+	    System.out.println("╰──────────────────────╯");
+	}
+
+	public void exibirInfo() {
+		System.out.println("╭────────────────────────────────────────────────────╮");
+	    System.out.println("│                                                    │");
+	    System.out.println("│    Programa feito para o projeto final da          │");
+	    System.out.println("│    disciplina de Linguagem de Programação,         │");
+	    System.out.println("│    lecionada  pela  profª  Raquel Pereira          │");
+	    System.out.println("│                                                    │");
+	    System.out.println("│    Integrantes do grupo:                           │");
+	    System.out.println("│    - André Henrique                                │");
+	    System.out.println("│    - Cleber Marcolino                              │");
+	    System.out.println("│    - Suerdo Flaubert                               │");
+	    System.out.println("│    - Maria Victória                                │");
+	    System.out.println("│                                                    │");
+	    System.out.println("╰────────────────────────────────────────────────────╯");
+	    
 	}
 
 	public void exibirOperacoes() {
 		System.out.println("╭──────────────────────╮");
-        System.out.println("│         MENU         │");
-        System.out.println("├──────────────────────┤");
-        System.out.println("│ 1. Comprar           │");
-        System.out.println("│ 2. Exibir Clientes   │");
-        System.out.println("│ 3. Exibir Pedidos    │");
-        System.out.println("│ 4. Informações       │");
-        System.out.println("│ 5. Sair              │");
-        System.out.println("╰──────────────────────╯");
+	    System.out.println("│         MENU         │");
+	    System.out.println("├──────────────────────┤");
+	    System.out.println("│ 1. Comprar           │");
+	    System.out.println("│ 2. Exibir Clientes   │");
+	    System.out.println("│ 3. Exibir Pedidos    │");
+	    System.out.println("│ 4. Informações       │");
+	    System.out.println("│ 5. Sair              │");
+	    System.out.println("╰──────────────────────╯");
 	}
 
 	public void exibirProdutosDoEstoque() {
@@ -405,18 +406,18 @@ public class VitalFarma implements Serializable {
 	    System.out.println("╰──────────────────────┴────────┴──────────────╯");
 	}
 
-	public void limparConsole() {
+	private void limparConsole() {
 		for(int i = 0; i < 100; i++) System.out.println();
     }
 
-	public String stringInput(String label) {
+	private String stringInput(String label) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(label);
         String line = scanner.nextLine().strip();
         return line;
     }
 
-	public int intInput(String label) {
+	private int intInput(String label) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(label);
         int integer = scanner.nextInt();
